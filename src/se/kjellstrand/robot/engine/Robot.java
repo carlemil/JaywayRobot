@@ -1,6 +1,5 @@
 package se.kjellstrand.robot.engine;
 
-import android.graphics.Point;
 import android.util.Log;
 
 public class Robot {
@@ -11,7 +10,13 @@ public class Robot {
 
     private RobotLocation mRobotLocation = new RobotLocation();
 
-    private String mInstructions;
+    /**
+     * Contains the program for a robot.
+     */
+    private String mProgram;
+    /**
+     * Points to the current instruction of the program/robot.
+     */
     private int mIntructionPointer = 0;
 
     private char mLeft;
@@ -21,8 +26,11 @@ public class Robot {
     public Robot(Language language) {
         setLanguage(language);
     }
-
+    
     public void setLanguage(Language language) {
+        
+        // TODO change to using English in the code, and hashmap for translations for display purposes ?
+        
         switch (language) {
             case SWEDISH:
                 mLeft = 'V';
@@ -54,9 +62,13 @@ public class Robot {
         return mForward;
     }
 
-    public void setInstructions(String instructions) {
-        this.mInstructions = instructions;
+    public void setProgram(String program) {
+        this.mProgram = program;
         this.mIntructionPointer = 0;
+    }
+    
+    public String getProgram() {
+        return this.mProgram;
     }
 
     public void putInRoom(Room room) {
@@ -80,7 +92,7 @@ public class Robot {
 
     public RobotLocation move() {
         if (hasMoreMoves()) {
-            char command = mInstructions.charAt(mIntructionPointer++);
+            char command = mProgram.charAt(mIntructionPointer++);
 
             if (command == mForward) {
                 Log.d(TAG, "Move forward");
@@ -93,10 +105,9 @@ public class Robot {
                 turnRight(mRobotLocation);
             }
 
-            Point p = mRobotLocation.getPosition();
-            Log.d(TAG, p.x + " " + p.y + " " + mRobotLocation.getDirection().toString().charAt(0));
+            Log.d(TAG, "Robot after moving: " + mRobotLocation.toString());
+            
             return mRobotLocation;
-
         }
         return null;
     }
@@ -184,7 +195,7 @@ public class Robot {
     }
 
     public boolean hasMoreMoves() {
-        if (mInstructions != null && mInstructions.length() > mIntructionPointer) {
+        if (mProgram != null && mProgram.length() > mIntructionPointer) {
             return true;
         }
         return false;

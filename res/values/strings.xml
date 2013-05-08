@@ -10,6 +10,6 @@
     <string name="delete">\u25c0</string>
     <string name="play">\u25b6</string>
     
-    <string name="result_from_previous_run_of_robot">Result from previous run of Robot: %s</string>
+    <string name="halting_position_of_robot">Halting position of Robot: %s</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,34 +28,66 @@ public class ControlPanelFragment extends Fragment {
     protected static final String TAG = ControlPanelFragment.class.getCanonicalName();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.control_panel, null);
+        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
+
+        CharSequence program = null;
+        
+        if (savedInstanceState != null) {
+            // populate from savedInstanceState
+            program = savedInstanceState.getString(RobotSharedPreferences.PROGRAM_KEY);
+            Log.d(TAG, "Read program from savedInstanceState: " + program);
+        } else {
+            // Populate from sharedPrefs
+            program = RobotSharedPreferences.getProgram(getActivity());
+            Log.d(TAG, "Read program from RobotSharedPreferences: " + program);
+        }
+//        if(program!=null){
+        programEditText.setText(program);
+        //}
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        
-        View v = getView();
-        
-        final EditText program = (EditText) v.findViewById(R.id.edit_text_program);
 
-        setComandButtonClickListener(program, v.findViewById(R.id.button_left), RobotApplication.getRobot()
+        Robot robot = RobotApplication.getRobot();
+        View view = getView();
+
+        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
+
+        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_left), robot
                 .getLeftChar());
-        setComandButtonClickListener(program, v.findViewById(R.id.button_right), RobotApplication
-                .getRobot().getRightChar());
-        setComandButtonClickListener(program, v.findViewById(R.id.button_forward), RobotApplication
-                .getRobot().getForwardChar());
+        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_right), robot.getRightChar());
+        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_forward), robot.getForwardChar());
 
-        setDeleteButtonClickListener(program, v.findViewById(R.id.button_delete));
+        setDeleteButtonClickListener(programEditText, view.findViewById(R.id.button_delete));
 
-        setPlayButtonClickListener(program, v.findViewById(R.id.button_play),
-                (TextView) v.findViewById(R.id.robot_run_result));
-    };
+        setPlayButtonClickListener(programEditText, view.findViewById(R.id.button_play),
+                (TextView) view.findViewById(R.id.robot_run_result));
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.control_panel, null);
+    public void onStop() {
+        super.onStop();
+        View view = getView();
+        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
+
+        String program = programEditText.getText().toString();
+        Log.d(TAG, "Write program to shared prefs: " + program);
+        if (program != null) {
+            RobotSharedPreferences.putProgram(getActivity(), program);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        final EditText programEditText = (EditText) getView().findViewById(R.id.edit_text_program);
+        String program = programEditText.getText().toString();
+        outState.putString(RobotSharedPreferences.PROGRAM_KEY, program);
     }
 
     private void setComandButtonClickListener(final EditText program, View view, final char c) {
@@ -82,11 +115,11 @@ public class ControlPanelFragment extends Fragment {
             public void onClick(View view) {
                 Editable instructions = program.getText();
                 Robot r = RobotApplication.getRobot();
-                r.setInstructions(instructions.toString());
+                r.setProgram(instructions.toString());
                 // TODO, config and not HARDCODED.
                 Rect dim = new Rect(0, 0, 5, 5);
                 Point pos = new Point(1, 2);
-                
+
                 Room room = new Rect2DRoom(dim, pos);
                 r.putInRoom(room);
 
@@ -94,7 +127,7 @@ public class ControlPanelFragment extends Fragment {
                 RobotLocation res = r.moveUntilEnd();
 
                 // Show the resulting state
-                String resString = getString(R.string.result_from_previous_run_of_robot, res.toString());
+                String resString = getString(R.string.halting_position_of_robot, res.toString());
                 resultTextView.setText(resString);
             }
         });

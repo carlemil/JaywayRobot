@@ -7,7 +7,7 @@ import android.app.Application;
 public class RobotApplication extends Application {
 
     private static Robot sRobot = new Robot(Language.SWEDISH);
-
+    
     public static Robot getRobot() {
         return sRobot;
     }
@@ -15,5 +15,5 @@ public class RobotApplication extends Application {
     public static void setRobot(Robot robot) {
         sRobot = robot;
     }
-    
+
 }
