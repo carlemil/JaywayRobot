@@ -7,7 +7,7 @@ Todo:
 
 add walls to room.
 
-cleanup.
+cleanup. remove menu stuff ?
 
 javadoc.
 

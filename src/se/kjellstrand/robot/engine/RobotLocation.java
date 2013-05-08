@@ -26,6 +26,6 @@ public class RobotLocation {
 
     @Override
     public String toString() {
-        return mPosition.x + " " + mPosition.y + " " + mDirection.toString();
+        return mPosition.x + " " + mPosition.y + " " + mDirection.toString().charAt(0);
     }
 }
