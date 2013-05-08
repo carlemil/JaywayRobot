@@ -77,7 +77,7 @@ public class Robot {
             Log.d(TAG, "After command, pos: " + mRobotPosition);
 
             Point p = mRobotPosition.getPosition();
-            return p.x + " " + p.y + " " + mRobotPosition.getDirection().toString();
+            return p.x + " " + p.y + " " + mRobotPosition.getDirection().toString().charAt(0);
 
         }
         return null;

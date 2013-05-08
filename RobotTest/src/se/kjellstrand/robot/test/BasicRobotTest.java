@@ -10,7 +10,11 @@ import junit.framework.TestCase;
 
 public class BasicRobotTest extends TestCase {
 
-    private static final String N = "NORTH";
+    private static final String N = "N";
+    private static final String W = "W";
+    private static final String E = "E";
+    private static final String S = "S";
+
 
     public BasicRobotTest(String name) {
         super(name);
@@ -35,6 +39,7 @@ public class BasicRobotTest extends TestCase {
         robot.putInRoom(room);
         assertEquals(null, robot.move());
 
+        // set instructions to, "one step forward".
         robot.setInstructions("G");
         // Still a 0,0 size room
         assertEquals("0 0 "+N, robot.move());
@@ -44,6 +49,18 @@ public class BasicRobotTest extends TestCase {
         room = new Rect2DRoom(dim, startPos);
         robot.putInRoom(room);
         assertEquals("0 1 "+N, robot.move());
+
+        // set instructions to, "left".
+        robot.setInstructions("V");
+        assertEquals("0 1 "+W, robot.move());
+
+        // set instructions to, "right".
+        robot.setInstructions("H");
+        assertEquals("0 1 "+N, robot.move());
+
+        // set instructions to, "right".
+        robot.setInstructions("H");
+        assertEquals("0 1 "+E, robot.move());
         
     }
     
