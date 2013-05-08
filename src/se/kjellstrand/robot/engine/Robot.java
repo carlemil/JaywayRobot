@@ -1,4 +1,4 @@
-package se.kjellstrand.robotconstructionkit;
+package se.kjellstrand.robot.engine;
 
 import android.graphics.Point;
 import android.util.Log;
@@ -56,10 +56,10 @@ public class Robot {
     public RobotCoordinate getRobotPosition() {
         return mRobotPosition;
     }
-    
-    public String moveUntilEnd(){
+
+    public String moveUntilEnd() {
         String res = null;
-        while(hasMoreMoves()){
+        while (hasMoreMoves()) {
             res = move();
         }
         return res;
@@ -67,10 +67,7 @@ public class Robot {
 
     public String move() {
         if (hasMoreMoves()) {
-
             char command = mInstructions.charAt(mIntructionPointer++);
-
-            Log.d(TAG, "Command: " + command + ", pos: " + mRobotPosition);
 
             if (command == mForward) {
                 Log.d(TAG, "Move forward");
@@ -82,7 +79,6 @@ public class Robot {
                 Log.d(TAG, "Turn right");
                 turnRight(mRobotPosition);
             }
-            Log.d(TAG, "After command, pos: " + mRobotPosition);
 
             Point p = mRobotPosition.getPosition();
             return p.x + " " + p.y + " " + mRobotPosition.getDirection().toString().charAt(0);
@@ -95,34 +91,26 @@ public class Robot {
         Direction dir = coord.getDirection();
         switch (dir) {
             case EAST:
-                Log.d(TAG, "move east");
                 coord.getPosition().offset(1, 0);
                 if (!mRoom.contains(coord.getPosition())) {
-                    Log.d(TAG, "undo move east");
                     coord.getPosition().offset(-1, 0);
                 }
                 break;
             case NORTH:
-                Log.d(TAG, "move north");
                 coord.getPosition().offset(0, 1);
                 if (!mRoom.contains(coord.getPosition())) {
-                    Log.d(TAG, "undo move north");
                     coord.getPosition().offset(0, -1);
                 }
                 break;
             case WEST:
-                Log.d(TAG, "move west");
                 coord.getPosition().offset(-1, 0);
                 if (!mRoom.contains(coord.getPosition())) {
-                    Log.d(TAG, "undo move west");
                     coord.getPosition().offset(1, 0);
                 }
                 break;
             case SOUTH:
-                Log.d(TAG, "move south");
                 coord.getPosition().offset(0, -1);
                 if (!mRoom.contains(coord.getPosition())) {
-                    Log.d(TAG, "undo move south");
                     coord.getPosition().offset(0, 1);
                 }
                 break;

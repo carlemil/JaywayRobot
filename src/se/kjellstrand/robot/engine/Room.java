@@ -1,4 +1,4 @@
-package se.kjellstrand.robotconstructionkit;
+package se.kjellstrand.robot.engine;
 
 public interface Room {
     android.graphics.Point getStartPosition();

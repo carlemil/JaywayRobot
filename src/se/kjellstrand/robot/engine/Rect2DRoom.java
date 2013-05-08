@@ -1,4 +1,4 @@
-package se.kjellstrand.robotconstructionkit;
+package se.kjellstrand.robot.engine;
 
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -25,7 +25,6 @@ public class Rect2DRoom implements Room {
 
     @Override
     public boolean contains(Point pos) {
-        Log.d(TAG, "room: " + mRoomDimensions + " pos: " + pos);
         return this.mRoomDimensions.contains(pos.x, pos.y);
     }
 

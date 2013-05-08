@@ -2,10 +2,10 @@ package se.kjellstrand.robot.test;
 
 import android.graphics.Point;
 import android.graphics.Rect;
-import se.kjellstrand.robotconstructionkit.Language;
-import se.kjellstrand.robotconstructionkit.Rect2DRoom;
-import se.kjellstrand.robotconstructionkit.Robot;
-import se.kjellstrand.robotconstructionkit.Room;
+import se.kjellstrand.robot.engine.Language;
+import se.kjellstrand.robot.engine.Rect2DRoom;
+import se.kjellstrand.robot.engine.Robot;
+import se.kjellstrand.robot.engine.Room;
 import junit.framework.TestCase;
 
 public class BasicRobotTest extends TestCase {
