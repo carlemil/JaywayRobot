@@ -6,7 +6,7 @@ public class RobotPosition {
 
     private Direction mDirection = Direction.NORTH;
 
-    private Point mPosition;
+    private Point mPosition = new Point();
 
     public Direction getDirection() {
         return mDirection;

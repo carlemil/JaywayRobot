@@ -1,14 +1,15 @@
 package se.kjellstrand.robotconstructionkit;
 
+import android.graphics.Point;
 import android.util.Log;
 
 public class Robot {
 
     private static final String TAG = Robot.class.getSimpleName();
 
-    private Room mRoom = new Robot2DRoom();
+    private Room mRoom;
 
-    private RobotPosition mRobotPosition;
+    private RobotPosition mRobotPosition = new RobotPosition();
 
     private String mInstructions;
     private int mIntructionPointer = 0;
@@ -16,6 +17,10 @@ public class Robot {
     private char mLeft;
     private char mRight;
     private char mForward;
+
+    public Robot(Language language) {
+        setLanguage(language);
+    }
 
     public void setLanguage(Language language) {
         switch (language) {
@@ -37,23 +42,20 @@ public class Robot {
         }
     }
 
-    public String getInstructions() {
-        return mInstructions;
-    }
-
     public void setInstructions(String instructions) {
         this.mInstructions = instructions;
+    }
+
+    public void setRoom(Room room) {
+        this.mRoom = room;
+        this.mRobotPosition.setPosition(room.getStartPosition());
     }
 
     public RobotPosition getRobotPosition() {
         return mRobotPosition;
     }
 
-    public void setRobotPosition(RobotPosition robotPosition) {
-        this.mRobotPosition = robotPosition;
-    }
-
-    public boolean move() {
+    public String move() {
         if (hasNextMove()) {
 
             char command = mInstructions.charAt(mIntructionPointer++);
@@ -65,44 +67,46 @@ public class Robot {
             } else if (command == mRight) {
                 turnRight(mRobotPosition);
             }
-            return true;
+            if (hasNextMove()) {
+                return null;
+            } else {
+                Point p = mRobotPosition.getPosition();
+                return p.x + " " + p.y + " " + mRobotPosition.getDirection().toString();
+            }
         }
-        return false;
+        return null;
     }
 
     private void moveForward(RobotPosition robotPosition) {
         Direction dir = robotPosition.getDirection();
         switch (dir) {
             case EAST:
-                
-                // TODO set the move offsets 
-                
-                robotPosition.getPosition().offset(0, 0);
+                robotPosition.getPosition().offset(1, 0);
                 if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(0, 0);
+                    robotPosition.getPosition().offset(-1, 0);
                 }
                 break;
             case NORTH:
-                robotPosition.getPosition().offset(0, 0);
+                robotPosition.getPosition().offset(0, 1);
                 if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(0, 0);
+                    robotPosition.getPosition().offset(0, -1);
                 }
                 break;
             case WEST:
-                robotPosition.getPosition().offset(0, 0);
+                robotPosition.getPosition().offset(-1, 0);
                 if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(0, 0);
+                    robotPosition.getPosition().offset(1, 0);
                 }
                 break;
             case SOUTH:
-                robotPosition.getPosition().offset(0, 0);
+                robotPosition.getPosition().offset(0, -1);
                 if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(0, 0);
+                    robotPosition.getPosition().offset(0, 1);
                 }
                 break;
 
             default:
-                Log.w(TAG, "Unknown Direction set: " + dir.toString());
+                Log.w(TAG, "Unknown Direction: " + dir.toString());
                 break;
         }
     }
