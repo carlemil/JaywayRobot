@@ -71,11 +71,8 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot(Language.SWEDISH);
         robot.putInRoom(room);
               
-        // set instructions to, "one step forward".
         robot.setInstructions("GHGGVGVVGG");
-        // Still a 0,0 size room
         assertEquals("3 1 "+S, robot.moveUntilEnd());
-        
     }
 
     public void testRobotMovesCommands2(){
@@ -85,11 +82,41 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot(Language.SWEDISH);
         robot.putInRoom(room);
               
-        // set instructions to, "one step forward".
         robot.setInstructions("HGHGGHGHG");
-        // Still a 0,0 size room
         assertEquals("1 1 "+N, robot.moveUntilEnd());
-        
+    }
+
+    public void testRobotMovesCommandsRoomBoundingBox1(){
+        Rect dim = new Rect(0, 0, 3, 3);
+        Point startPos = new Point(1, 1);
+        Room room = new Rect2DRoom(dim, startPos);
+        Robot robot = new Robot(Language.SWEDISH);
+        robot.putInRoom(room);
+              
+        robot.setInstructions("GGG");
+        assertEquals("1 2 "+N, robot.moveUntilEnd());
+    }
+    
+    public void testRobotMovesCommandsRoomBoundingBox2(){
+        Rect dim = new Rect(0, 0, 3, 3);
+        Point startPos = new Point(1, 1);
+        Room room = new Rect2DRoom(dim, startPos);
+        Robot robot = new Robot(Language.SWEDISH);
+        robot.putInRoom(room);
+              
+        robot.setInstructions("HGGG");
+        assertEquals("2 1 "+E, robot.moveUntilEnd());
+    }
+    
+    public void testRobotMovesCommandsRoomBoundingBox3(){
+        Rect dim = new Rect(0, 0, 3, 3);
+        Point startPos = new Point(1, 1);
+        Room room = new Rect2DRoom(dim, startPos);
+        Robot robot = new Robot(Language.SWEDISH);
+        robot.putInRoom(room);
+              
+        robot.setInstructions("HHGGGHGGG");
+        assertEquals("0 0 "+W, robot.moveUntilEnd());
     }
     
 }
