@@ -32,12 +32,19 @@ public class BasicRobotTest extends TestCase {
         
         assertEquals(null, robot.move());
 
-        robot.setRoom(room);
+        robot.putInRoom(room);
         assertEquals(null, robot.move());
 
         robot.setInstructions("G");
-        assertEquals("1 0 "+N, robot.move());
+        // Still a 0,0 size room
+        assertEquals("0 0 "+N, robot.move());
 
+        // create a room 5x5, and put the robot in it.
+        dim = new Rect(0, 0, 5, 5);
+        room = new Rect2DRoom(dim, startPos);
+        robot.putInRoom(room);
+        assertEquals("0 1 "+N, robot.move());
+        
     }
     
 }

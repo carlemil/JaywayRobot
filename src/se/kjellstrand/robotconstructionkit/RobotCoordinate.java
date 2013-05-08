@@ -2,7 +2,7 @@ package se.kjellstrand.robotconstructionkit;
 
 import android.graphics.Point;
 
-public class RobotPosition {
+public class RobotCoordinate {
 
     private Direction mDirection = Direction.NORTH;
 
@@ -22,5 +22,10 @@ public class RobotPosition {
 
     public void setPosition(Point position) {
         this.mPosition = position;
+    }
+
+    @Override
+    public String toString() {
+        return mPosition.x + " " + mPosition.y + " " + mDirection.toString();
     }
 }

@@ -2,8 +2,11 @@ package se.kjellstrand.robotconstructionkit;
 
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class Rect2DRoom implements Room {
+
+    private static final String TAG = Rect2DRoom.class.getCanonicalName();
 
     private Rect mRoomDimensions = new Rect();
 
@@ -12,6 +15,7 @@ public class Rect2DRoom implements Room {
     public Rect2DRoom(Rect dim, Point pos) {
         this.mRoomDimensions = dim;
         this.mStartPosition = pos;
+        Log.d(TAG, "New room: " + mRoomDimensions + " pos: " + pos);
     }
 
     @Override
@@ -21,12 +25,8 @@ public class Rect2DRoom implements Room {
 
     @Override
     public boolean contains(Point pos) {
-        // android.graphics.Rect puts origo in the upper left corner, we want it
-        // in the lower left, so we will do our own contains test.
-        return this.mRoomDimensions.bottom <= pos.y &&
-                this.mRoomDimensions.top > pos.y &&
-                this.mRoomDimensions.left <= pos.x &&
-                this.mRoomDimensions.right > pos.x;
+        Log.d(TAG, "room: " + mRoomDimensions + " pos: " + pos);
+        return this.mRoomDimensions.contains(pos.x, pos.y);
     }
 
 }

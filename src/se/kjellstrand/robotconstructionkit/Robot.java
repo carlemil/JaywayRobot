@@ -5,11 +5,11 @@ import android.util.Log;
 
 public class Robot {
 
-    private static final String TAG = Robot.class.getSimpleName();
+    private static final String TAG = Robot.class.getCanonicalName();
 
     private Room mRoom;
 
-    private RobotPosition mRobotPosition = new RobotPosition();
+    private RobotCoordinate mRobotPosition = new RobotCoordinate();
 
     private String mInstructions;
     private int mIntructionPointer = 0;
@@ -44,64 +44,78 @@ public class Robot {
 
     public void setInstructions(String instructions) {
         this.mInstructions = instructions;
+        this.mIntructionPointer = 0;
     }
 
-    public void setRoom(Room room) {
+    public void putInRoom(Room room) {
         this.mRoom = room;
         this.mRobotPosition.setPosition(room.getStartPosition());
+        this.mIntructionPointer = 0;
     }
 
-    public RobotPosition getRobotPosition() {
+    public RobotCoordinate getRobotPosition() {
         return mRobotPosition;
     }
 
     public String move() {
-        if (hasNextMove()) {
+        if (hasMoreMoves()) {
 
             char command = mInstructions.charAt(mIntructionPointer++);
 
+            Log.d(TAG, "Command: " + command + ", pos: " + mRobotPosition);
+
             if (command == mForward) {
+                Log.d(TAG, "Move forward");
                 moveForward(mRobotPosition);
             } else if (command == mLeft) {
+                Log.d(TAG, "Turn left");
                 turnLeft(mRobotPosition);
             } else if (command == mRight) {
+                Log.d(TAG, "Turn right");
                 turnRight(mRobotPosition);
             }
-            if (hasNextMove()) {
-                return null;
-            } else {
-                Point p = mRobotPosition.getPosition();
-                return p.x + " " + p.y + " " + mRobotPosition.getDirection().toString();
-            }
+            Log.d(TAG, "After command, pos: " + mRobotPosition);
+
+            Point p = mRobotPosition.getPosition();
+            return p.x + " " + p.y + " " + mRobotPosition.getDirection().toString();
+
         }
         return null;
     }
 
-    private void moveForward(RobotPosition robotPosition) {
-        Direction dir = robotPosition.getDirection();
+    private void moveForward(RobotCoordinate coord) {
+        Direction dir = coord.getDirection();
         switch (dir) {
             case EAST:
-                robotPosition.getPosition().offset(1, 0);
-                if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(-1, 0);
+                Log.d(TAG, "move east");
+                coord.getPosition().offset(1, 0);
+                if (!mRoom.contains(coord.getPosition())) {
+                    Log.d(TAG, "undo move east");
+                    coord.getPosition().offset(-1, 0);
                 }
                 break;
             case NORTH:
-                robotPosition.getPosition().offset(0, 1);
-                if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(0, -1);
+                Log.d(TAG, "move north");
+                coord.getPosition().offset(0, 1);
+                if (!mRoom.contains(coord.getPosition())) {
+                    Log.d(TAG, "undo move north");
+                    coord.getPosition().offset(0, -1);
                 }
                 break;
             case WEST:
-                robotPosition.getPosition().offset(-1, 0);
-                if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(1, 0);
+                Log.d(TAG, "move west");
+                coord.getPosition().offset(-1, 0);
+                if (!mRoom.contains(coord.getPosition())) {
+                    Log.d(TAG, "undo move west");
+                    coord.getPosition().offset(1, 0);
                 }
                 break;
             case SOUTH:
-                robotPosition.getPosition().offset(0, -1);
-                if (!mRoom.contains(robotPosition.getPosition())) {
-                    robotPosition.getPosition().offset(0, 1);
+                Log.d(TAG, "move soutth");
+                coord.getPosition().offset(0, -1);
+                if (!mRoom.contains(coord.getPosition())) {
+                    Log.d(TAG, "undo move soutth");
+                    coord.getPosition().offset(0, 1);
                 }
                 break;
 
@@ -111,20 +125,20 @@ public class Robot {
         }
     }
 
-    private void turnLeft(RobotPosition robotPosition) {
-        Direction dir = robotPosition.getDirection();
+    private void turnLeft(RobotCoordinate coord) {
+        Direction dir = coord.getDirection();
         switch (dir) {
             case EAST:
-                robotPosition.setDirection(Direction.NORTH);
+                coord.setDirection(Direction.NORTH);
                 break;
             case NORTH:
-                robotPosition.setDirection(Direction.WEST);
+                coord.setDirection(Direction.WEST);
                 break;
             case WEST:
-                robotPosition.setDirection(Direction.SOUTH);
+                coord.setDirection(Direction.SOUTH);
                 break;
             case SOUTH:
-                robotPosition.setDirection(Direction.EAST);
+                coord.setDirection(Direction.EAST);
                 break;
 
             default:
@@ -133,20 +147,20 @@ public class Robot {
         }
     }
 
-    private void turnRight(RobotPosition robotPosition) {
-        Direction dir = robotPosition.getDirection();
+    private void turnRight(RobotCoordinate coord) {
+        Direction dir = coord.getDirection();
         switch (dir) {
             case EAST:
-                robotPosition.setDirection(Direction.SOUTH);
+                coord.setDirection(Direction.SOUTH);
                 break;
             case NORTH:
-                robotPosition.setDirection(Direction.EAST);
+                coord.setDirection(Direction.EAST);
                 break;
             case WEST:
-                robotPosition.setDirection(Direction.NORTH);
+                coord.setDirection(Direction.NORTH);
                 break;
             case SOUTH:
-                robotPosition.setDirection(Direction.WEST);
+                coord.setDirection(Direction.WEST);
                 break;
 
             default:
@@ -155,7 +169,7 @@ public class Robot {
         }
     }
 
-    public boolean hasNextMove() {
+    public boolean hasMoreMoves() {
         if (mInstructions != null && mInstructions.length() > mIntructionPointer) {
             return true;
         }
