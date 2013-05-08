@@ -2,7 +2,7 @@ package se.kjellstrand.robot.engine;
 
 import android.graphics.Point;
 
-public class RobotCoordinate {
+public class RobotLocation {
 
     private Direction mDirection = Direction.NORTH;
 

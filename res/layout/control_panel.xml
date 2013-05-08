@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <EditText
+        android:id="@+id/edit_text_program"
+        style="@style/TextBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false" >
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/button_left"
+            style="@style/CommandButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:minWidth="@dimen/command_button_width"
+            android:text="@string/left_arrow" />
+
+        <Button
+            android:id="@+id/button_forward"
+            style="@style/CommandButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:minWidth="@dimen/command_button_width"
+            android:text="@string/up_arrow" />
+
+        <Button
+            android:id="@+id/button_right"
+            style="@style/CommandButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:minWidth="@dimen/command_button_width"
+            android:text="@string/right_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/button_delete"
+            style="@style/CommandButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:minWidth="@dimen/command_button_width"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/button_play"
+            style="@style/CommandButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:minWidth="@dimen/command_button_width"
+            android:text="@string/play" />
+    </LinearLayout>
+
+</LinearLayout>
