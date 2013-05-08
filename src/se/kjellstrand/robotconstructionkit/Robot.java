@@ -56,6 +56,14 @@ public class Robot {
     public RobotCoordinate getRobotPosition() {
         return mRobotPosition;
     }
+    
+    public String moveUntilEnd(){
+        String res = null;
+        while(hasMoreMoves()){
+            res = move();
+        }
+        return res;
+    }
 
     public String move() {
         if (hasMoreMoves()) {
@@ -111,10 +119,10 @@ public class Robot {
                 }
                 break;
             case SOUTH:
-                Log.d(TAG, "move soutth");
+                Log.d(TAG, "move south");
                 coord.getPosition().offset(0, -1);
                 if (!mRoom.contains(coord.getPosition())) {
-                    Log.d(TAG, "undo move soutth");
+                    Log.d(TAG, "undo move south");
                     coord.getPosition().offset(0, 1);
                 }
                 break;

@@ -63,5 +63,33 @@ public class BasicRobotTest extends TestCase {
         assertEquals("0 1 "+E, robot.move());
         
     }
+
+    public void testRobotMovesCommands1(){
+        Rect dim = new Rect(0, 0, 5, 5);
+        Point startPos = new Point(1, 1);
+        Room room = new Rect2DRoom(dim, startPos);
+        Robot robot = new Robot(Language.SWEDISH);
+        robot.putInRoom(room);
+              
+        // set instructions to, "one step forward".
+        robot.setInstructions("GHGGVGVVGG");
+        // Still a 0,0 size room
+        assertEquals("3 1 "+S, robot.moveUntilEnd());
+        
+    }
+
+    public void testRobotMovesCommands2(){
+        Rect dim = new Rect(0, 0, 5, 5);
+        Point startPos = new Point(1, 2);
+        Room room = new Rect2DRoom(dim, startPos);
+        Robot robot = new Robot(Language.SWEDISH);
+        robot.putInRoom(room);
+              
+        // set instructions to, "one step forward".
+        robot.setInstructions("HGHGGHGHG");
+        // Still a 0,0 size room
+        assertEquals("1 1 "+N, robot.moveUntilEnd());
+        
+    }
     
 }
