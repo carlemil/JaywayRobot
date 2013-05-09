@@ -35,15 +35,31 @@ public class VisualiserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.visualiser, null);
     }
-
-    public void setRobotPath(RobotLocation[] robotPath) {
-
+    
+    public void setRobotAndRoom(RobotLocation[] robotLocationList, Point[] room){
+        RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
+        setRoom(room, rrv);
+        setRobotPath(robotLocationList, rrv);
+        rrv.invalidate();
     }
 
-    public void setRoom(Point[] room) {
+    private void setRobotPath(RobotLocation[] robotLocationList, RobotRoomView rrv) {
 
-        RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
+        if (robotLocationList.length >= 3) {
+            Path robotPath = new Path();
+            robotPath.moveTo(robotLocationList[0].getPosition().x,
+                    robotLocationList[0].getPosition().y);
 
+            for (RobotLocation rl : robotLocationList) {
+                // TODO Change to quadTo
+                robotPath.lineTo(rl.getPosition().x, rl.getPosition().y);
+            }
+            
+            rrv.setRobotPath(robotPath);
+        }
+    }
+
+    private void setRoom(Point[] room, RobotRoomView rrv) {
         // A room with < 3 walls is no room.
         if (room.length >= 3) {
             Path walls = new Path();
@@ -58,7 +74,8 @@ public class VisualiserFragment extends Fragment {
                 maxx = Math.max(maxx, p.x);
                 maxy = Math.max(maxy, p.y);
             }
-            // The last line (or was it the carpet?) that ties the room together. 
+            // The last line (or was it the carpet?) that ties the room
+            // together.
             walls.lineTo(room[0].x, room[0].y);
 
             // Important to define the viewport before adding walls. Scaling and
@@ -66,7 +83,6 @@ public class VisualiserFragment extends Fragment {
             rrv.defineViewPort(minx, miny, maxx, maxy, 1);
 
             rrv.setWalls(walls);
-            rrv.invalidate();
         }
 
     }

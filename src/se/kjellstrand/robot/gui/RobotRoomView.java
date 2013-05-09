@@ -23,6 +23,9 @@ public class RobotRoomView extends View {
 
     private Paint mBackgroundPaint = new Paint();
     private Paint mRobotPathPaint = new Paint();
+    
+    private int mRobotPathStrokeWidth;
+    private int mRoomStrokeWidth;
 
     private Path mWalls;
     private Path mRobotPath;
@@ -50,6 +53,9 @@ public class RobotRoomView extends View {
 
         float scale = 1 / Math.max(xScale, yScale);
 
+        mRobotPathStrokeWidth = (int) (scale*20);
+        mRoomStrokeWidth=(int) (scale*10);
+        
         mMatrix = new Matrix();
 
         // Move the walls onto 1, 1
@@ -58,12 +64,22 @@ public class RobotRoomView extends View {
 
     }
     
-    public void setRobotPath(Path robotPAth){
+    public void setRobotPath(Path robotPath){
+        mRobotPathPaint.setColor(Color.GREEN);
+        mRobotPathPaint.setStyle(Paint.Style.STROKE);
+        mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
+        mRobotPathPaint.setStrokeWidth(10);
         
+        if (mMatrix != null && robotPath != null) {
+            robotPath.transform(mMatrix);
+        } else {
+            Log.w(TAG, "No matrix set for scaling and translating!!!");
+        }
+        this.mRobotPath = robotPath; 
     }
 
     public void setWalls(Path walls) {
-        mBackgroundPaint.setColor(Color.BLUE);
+        mBackgroundPaint.setColor(Color.GRAY);
 
         mRoomPaint.setColor(Color.RED);
         mRoomPaint.setStyle(Paint.Style.STROKE);
@@ -83,10 +99,13 @@ public class RobotRoomView extends View {
     public void draw(android.graphics.Canvas canvas) {
 
         canvas.drawPaint(mBackgroundPaint);
+        
+        if (mRobotPath != null && !mRobotPath.isEmpty()) {
+            canvas.drawPath(mRobotPath, mRobotPathPaint);
+        }
 
-        // Render routes to the temporary bitmap
         if (mWalls != null && !mWalls.isEmpty()) {
-            canvas.drawPath(mWalls, mRoomPaint); // render outer line
+            canvas.drawPath(mWalls, mRoomPaint);
         }
     }
 
