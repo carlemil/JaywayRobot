@@ -1,8 +1,10 @@
 package se.kjellstrand.robot.gui;
 
+import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.Language;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Convenience class for handling the persistence of some settings.
@@ -21,8 +23,6 @@ public class RobotSharedPreferences {
      * fragments/activities to store the language of the current robot.
      */
     public static final String LANGUAGE_KEY = "language";
-
-    private static final String PREFS_NAME = "RobotSharedPreferencesFile";
 
     private static SharedPreferences mPrefs;
 
@@ -68,14 +68,18 @@ public class RobotSharedPreferences {
      * @return the language.
      */
     public static Language getLanguage(Context context) {
-        Language language = Language.values()[getPrefs(context).getInt(LANGUAGE_KEY, 0)];
-        return language;
+        String languagePrefKey = context.getString(R.string.pref_languages_key);
+        String lang = getPrefs(context).getString(languagePrefKey, null);
+        if (lang.equals(context.getString(R.string.swedish))) {
+            return Language.SWEDISH;
+        } else {
+            return Language.ENGLISH;
+        }
     }
 
-    
     private static SharedPreferences getPrefs(Context context) {
         if (mPrefs == null) {
-            mPrefs = context.getSharedPreferences(PREFS_NAME, 0);
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
         return mPrefs;
     }

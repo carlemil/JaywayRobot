@@ -14,4 +14,17 @@
     
     <string name="unknown_position">unknown</string>
 
+    <!-- String related to the charsets used for the digits -->
+    <string name="pref_languages_title">Language</string>
+    <string name="pref_languages_summary">Robot is speaking %s</string>
+    <string name="pref_languages_dialog_title">Select what language the robot should speak</string>
+    <string name="pref_languages_key">pref_languages_key</string>
+    <string name="english">English</string>
+    <string name="swedish">Swedish</string>
+    
+    <string-array name="list_of_languages">
+        <item>@string/english</item>
+        <item>@string/swedish</item>
+    </string-array>
+    
 </resources>

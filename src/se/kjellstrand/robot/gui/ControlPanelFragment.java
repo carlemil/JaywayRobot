@@ -9,9 +9,9 @@ import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
 import se.kjellstrand.robot.engine.RoomWithWalls;
 import android.app.Activity;
+import android.app.Fragment;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +36,7 @@ public class ControlPanelFragment extends Fragment {
     /**
      * Default language is English.
      */
-    private Language mLanguage = Language.ENGLISH;
+    private Language mLanguage;
 
     /**
      * Language specific char used to denote a forward command.
@@ -67,6 +67,10 @@ public class ControlPanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.control_panel, null);
+        
+        mLanguage = RobotSharedPreferences.getLanguage(getActivity());
+        Log.d(TAG, "Language: "+mLanguage);
+        setLanguage(mLanguage);
 
         if (savedInstanceState != null) {
             // populate from savedInstanceState
@@ -74,11 +78,11 @@ public class ControlPanelFragment extends Fragment {
             Log.d(TAG, "Read program from savedInstanceState: " + mProgram);
         } else {
             // Populate from sharedPrefs
-            mProgram = new StringBuilder(RobotSharedPreferences.getProgram(getActivity()));
-            mLanguage = RobotSharedPreferences.getLanguage(getActivity());
+            String program = RobotSharedPreferences.getProgram(getActivity());
+            if (program != null) {
+                mProgram.append(program);
+            }
         }
-
-        setLanguage(mLanguage);
 
         final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
         programEditText.setText(mProgram);
@@ -114,8 +118,6 @@ public class ControlPanelFragment extends Fragment {
         if (mProgram != null) {
             RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
         }
-        RobotSharedPreferences.putLanguage(getActivity(), mLanguage);
-
     }
 
     @Override
@@ -183,6 +185,11 @@ public class ControlPanelFragment extends Fragment {
         mForwardChar = Language.getForwardChar(language);
         mLeftChar = Language.getLeftChar(language);
         mRightChar = Language.getRightChar(language);
+    }
+    
+    public void setNewLanguage(Language language){
+        setLanguage(language);
+        mProgram = new StringBuilder();
     }
 
 }
