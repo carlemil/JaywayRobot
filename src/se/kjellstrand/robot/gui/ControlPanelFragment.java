@@ -6,7 +6,6 @@ import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
-import se.kjellstrand.robot.engine.Room;
 import se.kjellstrand.robot.engine.RoomWithWalls;
 import android.app.Activity;
 import android.graphics.Point;

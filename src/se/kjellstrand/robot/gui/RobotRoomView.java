@@ -2,11 +2,9 @@ package se.kjellstrand.robot.gui;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PathEffect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +12,6 @@ import android.view.View;
 public class RobotRoomView extends View {
 
     private String TAG = RobotRoomView.class.getCanonicalName();
-
-    private PathEffect robotPathEffect = new DashPathEffect(new float[] {
-            10, 5, 5, 5
-    }, 3);
 
     private Paint mRoomPaint = new Paint();
 
@@ -70,6 +64,11 @@ public class RobotRoomView extends View {
         mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mRobotPathPaint.setStrokeWidth(mRobotPathStrokeWidth);
 
+//        PathEffect pathEffect = new DashPathEffect(new float[] {
+//                10, 10
+//        }, 3);
+//        mRobotPathPaint.setPathEffect(pathEffect);
+        
         if (mMatrix != null && robotPath != null) {
             robotPath.transform(mMatrix);
         } else {

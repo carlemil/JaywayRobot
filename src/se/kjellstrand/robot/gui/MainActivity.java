@@ -1,7 +1,6 @@
 package se.kjellstrand.robot.gui;
 
 import se.kjellstrand.robot.R;
-import se.kjellstrand.robot.engine.RobotLocation;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

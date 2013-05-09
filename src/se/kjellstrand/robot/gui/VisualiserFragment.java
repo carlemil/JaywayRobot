@@ -1,20 +1,13 @@
 package se.kjellstrand.robot.gui;
 
 import se.kjellstrand.robot.R;
-import se.kjellstrand.robot.engine.RobotLocation;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.graphics.Region;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * Fragment responsible for showing a control panel for the Robot to the user.
