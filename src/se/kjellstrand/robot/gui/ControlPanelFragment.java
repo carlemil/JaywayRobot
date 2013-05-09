@@ -67,9 +67,9 @@ public class ControlPanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.control_panel, null);
-        
+
         mLanguage = RobotSharedPreferences.getLanguage(getActivity());
-        Log.d(TAG, "Language: "+mLanguage);
+        Log.d(TAG, "Language: " + mLanguage);
         setLanguage(mLanguage);
 
         if (savedInstanceState != null) {
@@ -100,6 +100,15 @@ public class ControlPanelFragment extends Fragment {
 
         View view = getView();
 
+        Language language = RobotSharedPreferences.getLanguage(getActivity());
+        if (language != mLanguage) {
+            Log.d(TAG, "New language set: " + language);
+            setLanguage(language);
+            // Reset out program since the language changed.
+            mProgram = new StringBuilder();
+            showCurrentProgram();
+        }
+
         setComandButtonClickListener(view.findViewById(R.id.button_left), mLeftChar);
         setComandButtonClickListener(view.findViewById(R.id.button_right), mRightChar);
         setComandButtonClickListener(view.findViewById(R.id.button_forward), mForwardChar);
@@ -108,6 +117,11 @@ public class ControlPanelFragment extends Fragment {
 
         setPlayButtonClickListener(view.findViewById(R.id.button_play),
                 (TextView) view.findViewById(R.id.robot_run_result));
+    }
+
+    private void showCurrentProgram() {
+        EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
+        edittext.setText(mProgram.toString());
     }
 
     @Override
@@ -129,8 +143,7 @@ public class ControlPanelFragment extends Fragment {
         view.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 mProgram.append(c);
-                EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
-                edittext.setText(mProgram.toString());
+                showCurrentProgram();
             }
         });
     }
@@ -182,14 +195,12 @@ public class ControlPanelFragment extends Fragment {
     }
 
     private void setLanguage(Language language) {
+        mLanguage = language;
         mForwardChar = Language.getForwardChar(language);
         mLeftChar = Language.getLeftChar(language);
         mRightChar = Language.getRightChar(language);
     }
-    
-    public void setNewLanguage(Language language){
-        setLanguage(language);
-        mProgram = new StringBuilder();
-    }
+
+   
 
 }
