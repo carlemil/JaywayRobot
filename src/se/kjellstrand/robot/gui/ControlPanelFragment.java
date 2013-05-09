@@ -6,7 +6,6 @@ import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
 import se.kjellstrand.robot.engine.Room;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -45,6 +44,10 @@ public class ControlPanelFragment extends Fragment {
         }
 
         programEditText.setText(mProgram);
+
+        String resString = getString(R.string.halting_position_of_robot,
+                getActivity().getString(R.string.unknown_position));
+        ((TextView) view.findViewById(R.id.robot_run_result)).setText(resString);
 
         return view;
     }
@@ -110,7 +113,7 @@ public class ControlPanelFragment extends Fragment {
                 robot.setProgram(mProgram.toString());
 
                 // TODO, config and not HARDCODED.
-                Room room = new Rect2DRoom(5,5, new Point(1, 2));
+                Room room = new Rect2DRoom(5, 5, new Point(1, 2));
 
                 robot.putInRoom(room);
 

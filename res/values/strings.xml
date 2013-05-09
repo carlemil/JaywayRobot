@@ -11,5 +11,7 @@
     <string name="play">\u25b6</string>
     
     <string name="halting_position_of_robot">Halting position of Robot: %s</string>
+    
+    <string name="unknown_position">unknown</string>
 
 </resources>
