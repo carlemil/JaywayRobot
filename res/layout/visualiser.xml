@@ -10,11 +10,10 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <se.kjellstrand.robot.gui.RobotRoomView     
-        android:id="@+id/robot_room_view"    
+    <se.kjellstrand.robot.gui.RobotRoomView
+        android:id="@+id/robot_room_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="16dp"
-        android:background="#ff0000ff"/>
-    
+        android:layout_margin="16dp" />
+
 </LinearLayout>

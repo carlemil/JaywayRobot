@@ -44,7 +44,7 @@ public class RobotRoomView extends View {
         super(context);
     }
 
-    public void defineViewPort(int minX, int minY, int maxX, int maxY, int roomPadding) {
+    public void defineViewPort(int minX, int minY, int maxX, int maxY, float roomPadding) {
         float roomWidth = (roomPadding * 2) + maxX - minX;
         float roomHeight = (roomPadding * 2) + maxY - minY;
 
@@ -53,8 +53,8 @@ public class RobotRoomView extends View {
 
         float scale = 1 / Math.max(xScale, yScale);
 
-        mRobotPathStrokeWidth = (int) (scale*20);
-        mRoomStrokeWidth=(int) (scale*10);
+        mRobotPathStrokeWidth = (int) (scale*0.5);
+        mRoomStrokeWidth=(int) (scale);
         
         mMatrix = new Matrix();
 
@@ -65,10 +65,10 @@ public class RobotRoomView extends View {
     }
     
     public void setRobotPath(Path robotPath){
-        mRobotPathPaint.setColor(Color.GREEN);
+        mRobotPathPaint.setColor(Color.DKGRAY);
         mRobotPathPaint.setStyle(Paint.Style.STROKE);
         mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
-        mRobotPathPaint.setStrokeWidth(10);
+        mRobotPathPaint.setStrokeWidth(mRobotPathStrokeWidth);
         
         if (mMatrix != null && robotPath != null) {
             robotPath.transform(mMatrix);
@@ -79,13 +79,14 @@ public class RobotRoomView extends View {
     }
 
     public void setWalls(Path walls) {
-        mBackgroundPaint.setColor(Color.GRAY);
-
-        mRoomPaint.setColor(Color.RED);
+        mBackgroundPaint.setColor(Color.WHITE);
+        mBackgroundPaint.setStyle(Paint.Style.FILL);
+        
+        mRoomPaint.setColor(Color.GRAY);
         mRoomPaint.setStyle(Paint.Style.STROKE);
-        mRoomPaint.setStrokeJoin(Paint.Join.ROUND);
-        // mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mRoomPaint.setStrokeWidth(10);
+        mRoomPaint.setStrokeJoin(Paint.Join.MITER);
+        mRoomPaint.setStrokeCap(Paint.Cap.SQUARE);
+        mRoomPaint.setStrokeWidth(mRoomStrokeWidth);
 
         if (mMatrix != null && walls != null) {
             walls.transform(mMatrix);
@@ -98,7 +99,7 @@ public class RobotRoomView extends View {
     @Override
     public void draw(android.graphics.Canvas canvas) {
 
-        canvas.drawPaint(mBackgroundPaint);
+        canvas.drawColor(Color.LTGRAY);
         
         if (mRobotPath != null && !mRobotPath.isEmpty()) {
             canvas.drawPath(mRobotPath, mRobotPathPaint);

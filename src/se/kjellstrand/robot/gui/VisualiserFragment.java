@@ -40,6 +40,7 @@ public class VisualiserFragment extends Fragment {
         RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
         setRoom(room, rrv);
         setRobotPath(robotLocationList, rrv);
+        
         rrv.invalidate();
     }
 
@@ -80,7 +81,7 @@ public class VisualiserFragment extends Fragment {
 
             // Important to define the viewport before adding walls. Scaling and
             // translating will not be correct if the order is reversed.
-            rrv.defineViewPort(minx, miny, maxx, maxy, 1);
+            rrv.defineViewPort(minx, miny, maxx, maxy, 0.5f);
 
             rrv.setWalls(walls);
         }

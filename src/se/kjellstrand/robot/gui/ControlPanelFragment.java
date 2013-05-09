@@ -129,7 +129,7 @@ public class ControlPanelFragment extends Fragment {
                 robot.setProgram(mProgram.toString());
 
                 // TODO, config and not HARDCODED.
-                RoomWithWalls room = new Rect2DRoom(5, 3, new Point(1, 2));
+                RoomWithWalls room = new Rect2DRoom(8, 5, new Point(1, 2));
 
                 robot.putInRoom(room);
 
