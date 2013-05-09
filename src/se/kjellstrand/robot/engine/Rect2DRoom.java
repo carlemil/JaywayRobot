@@ -12,14 +12,16 @@ public class Rect2DRoom implements RoomWithWalls {
 
     private static final String TAG = Rect2DRoom.class.getCanonicalName();
 
-    private Rect mRoomDimensions = new Rect();
+    private int mRoomWidth = 0;
+    private int mRoomHeight = 0;
 
     private Point mStartPosition = new Point();
 
-    public Rect2DRoom(Rect dim, Point pos) {
-        this.mRoomDimensions = dim;
+    public Rect2DRoom(int width, int height, Point pos) {
+        this.mRoomWidth = width;
+        this.mRoomHeight = height;
         this.mStartPosition = pos;
-        Log.d(TAG, "New room: " + mRoomDimensions + " startPos: " + pos);
+        Log.d(TAG, "New room: " + width + " x " + height + " startPos: " + pos);
     }
 
     @Override
@@ -29,16 +31,16 @@ public class Rect2DRoom implements RoomWithWalls {
 
     @Override
     public boolean contains(Point pos) {
-        return this.mRoomDimensions.contains(pos.x, pos.y);
+        return pos.x > 0 && pos.x < mRoomWidth && pos.y > 0 && pos.y < mRoomHeight;
     }
 
     @Override
     public Point[] getWalls() {
         Point[] walls = new Point[] {
                 new Point(-1, -1),
-                new Point(mRoomDimensions.right, -1),
-                new Point(mRoomDimensions.right, mRoomDimensions.bottom),
-                new Point(-1, mRoomDimensions.bottom)
+                new Point(mRoomWidth, -1),
+                new Point(mRoomWidth, mRoomHeight),
+                new Point(-1, mRoomHeight)
         };
         return walls;
     }

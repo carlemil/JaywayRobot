@@ -9,7 +9,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,18 +110,18 @@ public class ControlPanelFragment extends Fragment {
                 robot.setProgram(mProgram.toString());
 
                 // TODO, config and not HARDCODED.
-                Rect dim = new Rect(0, 0, 5, 5);
-                Point pos = new Point(1, 2);
+                Room room = new Rect2DRoom(5,5, new Point(1, 2));
 
-                Room room = new Rect2DRoom(dim, pos);
                 robot.putInRoom(room);
 
                 // Run the program to the end.
                 RobotLocation res = robot.moveUntilEnd();
 
                 // Show the resulting state
-                String resString = getString(R.string.halting_position_of_robot, res.toString());
-                resultTextView.setText(resString);
+                if (res != null) {
+                    String resString = getString(R.string.halting_position_of_robot, res.toString());
+                    resultTextView.setText(resString);
+                }
             }
         });
     }

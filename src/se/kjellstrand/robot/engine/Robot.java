@@ -14,6 +14,7 @@ public class Robot {
      * Contains the program for a robot.
      */
     private String mProgram;
+    
     /**
      * Points to the current instruction of the program/robot.
      */
@@ -62,11 +63,13 @@ public class Robot {
                 Log.d(TAG, "Move forward");
                 moveForward(mRobotLocation);
             } else if (command == TURN_LEFT) {
-                Log.d(TAG, "Turn left");
+                Log.d(TAG, "Turn left, then move forward.");
                 turnLeft(mRobotLocation);
+                moveForward(mRobotLocation);
             } else if (command == TURN_RIGHT) {
-                Log.d(TAG, "Turn right");
+                Log.d(TAG, "Turn right, then move forward.");
                 turnRight(mRobotLocation);
+                moveForward(mRobotLocation);
             }
 
             Log.d(TAG, "Robot after moving: " + mRobotLocation.toString());
