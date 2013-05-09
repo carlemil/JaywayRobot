@@ -143,7 +143,7 @@ public class ControlPanelFragment extends Fragment {
                     res = robot.move();
                     robotPath.add(res.getPosition());
                 }
-Log.d(TAG, "list of moves length: "+robotPath.size());
+
                 // Show the resulting state
                 if (res != null) {
                     String resString = getString(R.string.halting_position_of_robot, res.toString());

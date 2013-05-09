@@ -36,56 +36,46 @@ public class VisualiserFragment extends Fragment {
         return inflater.inflate(R.layout.visualiser, null);
     }
 
-    public void setRobotAndRoom(Point[] robotPath, Point[] room) {
+    public void setRobotAndRoom(Point[] robotPathPoints, Point[] roomWallPoints) {
         RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
-        setRoom(room, rrv);
-        setRobotPath(robotPath, rrv);
 
-        rrv.invalidate();
-    }
+        int leftWall = Integer.MAX_VALUE, topWall = Integer.MAX_VALUE, rightWall = 0, bottomWall = 0;
 
-    private void setRobotPath(Point[] robotLocationList, RobotRoomView rrv) {
-
-        Path robotPath = new Path();
-        robotPath.moveTo(robotLocationList[0].x,
-                robotLocationList[0].y);
-
-        for (int i=0;i<robotLocationList.length;i++) {
-            Point p = robotLocationList[i];
-            // TODO Change to quadTo
-            robotPath.lineTo(p.x, p.y);
-            Log.d(TAG,"path coord: "+p.x+" - "+p.y);
-        }
-
-        rrv.setRobotPath(robotPath);
-    }
-
-    private void setRoom(Point[] room, RobotRoomView rrv) {
         // A room with < 3 walls is no room.
-        if (room.length >= 3) {
+        if (roomWallPoints.length >= 3) {
             Path walls = new Path();
-            walls.moveTo(room[0].x, room[0].y);
-            int minx = Integer.MAX_VALUE, miny = Integer.MAX_VALUE, maxx = 0, maxy = 0;
-            for (Point p : room) {
+            walls.moveTo(roomWallPoints[roomWallPoints.length - 1].x,
+                    roomWallPoints[roomWallPoints.length - 1].y);
+            for (Point p : roomWallPoints) {
                 walls.lineTo(p.x, p.y);
                 // Store the bounding box of the room, used to scale up the room
                 // and robot path to the screen.
-                minx = Math.min(minx, p.x);
-                miny = Math.min(miny, p.y);
-                maxx = Math.max(maxx, p.x);
-                maxy = Math.max(maxy, p.y);
+                leftWall = Math.min(leftWall, p.x);
+                topWall = Math.min(topWall, p.y);
+                rightWall = Math.max(rightWall, p.x);
+                bottomWall = Math.max(bottomWall, p.y);
             }
-            // The last line (or was it the carpet?) that ties the room
-            // together.
-            walls.lineTo(room[0].x, room[0].y);
 
             // Important to define the viewport before adding walls. Scaling and
             // translating will not be correct if the order is reversed.
-            rrv.defineViewPort(minx, miny, maxx, maxy, 0.5f);
+            rrv.defineViewPort(leftWall, topWall, rightWall, bottomWall, 0.5f);
 
             rrv.setWalls(walls);
         }
 
+        Path robotPath = new Path();
+        robotPath.moveTo(robotPathPoints[0].x,
+                bottomWall - robotPathPoints[0].y);
+
+        for (Point p : robotPathPoints) {
+
+            // TODO Change to quadTo
+            robotPath.lineTo(p.x, bottomWall - p.y);
+        }
+
+        rrv.setRobotPath(robotPath);
+
+        rrv.invalidate();
     }
 
 }
