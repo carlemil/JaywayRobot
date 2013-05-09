@@ -7,7 +7,7 @@ import se.kjellstrand.robot.engine.Language;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
-import se.kjellstrand.robot.engine.RoomWithWalls;
+import se.kjellstrand.robot.engine.Room;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Point;
@@ -36,7 +36,7 @@ public class ControlPanelFragment extends Fragment {
     /**
      * Default language is English.
      */
-    private Language mLanguage;
+    private Language mLanguage = Language.ENGLISH;
 
     /**
      * Language specific char used to denote a forward command.
@@ -115,8 +115,9 @@ public class ControlPanelFragment extends Fragment {
 
         setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
 
-        setPlayButtonClickListener(view.findViewById(R.id.button_play),
-                (TextView) view.findViewById(R.id.robot_run_result));
+        setPlayButtonClickListener(view.findViewById(R.id.button_play));
+        
+        runRobotAndUpdateVisualisation();
     }
 
     @Override
@@ -128,8 +129,8 @@ public class ControlPanelFragment extends Fragment {
     public void onStop() {
         super.onStop();
 
-        Log.d(TAG, "Write program to shared prefs: " + mProgram);
         if (mProgram != null) {
+            Log.d(TAG, "Write program to shared prefs: " + mProgram);
             RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
         }
     }
@@ -165,38 +166,48 @@ public class ControlPanelFragment extends Fragment {
         mRightChar = Language.getRightChar(language);
     }
 
-    private void setPlayButtonClickListener(View button, final TextView resultTextView) {
+    private void setPlayButtonClickListener(View button) {
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Robot robot = new Robot(mLanguage);
-                robot.setProgram(mProgram.toString());
-
-                // TODO, config and not HARDCODED.
-                RoomWithWalls room = new Rect2DRoom(9, 5, new Point(1, 2));
-
-                robot.putInRoom(room);
-
-                ArrayList<Point> robotPath = new ArrayList<Point>();
-                robotPath.add(room.getStartPosition());
-
-                RobotLocation res = null;
-                // Run the program to the end. Save the intermediate locations
-                // for visualising the path.
-                while (robot.hasMoreMoves()) {
-                    res = robot.move();
-                    robotPath.add(res.getPosition());
-                }
-
-                // Show the resulting state
-                if (res != null) {
-                    String resString = getString(R.string.halting_position_of_robot, res.toString());
-                    resultTextView.setText(resString);
-                }
-
-                mResultListener.result(robotPath.toArray(new Point[robotPath.size()]), room.getWalls());
+                runRobotAndUpdateVisualisation();
             }
+
         });
+    }
+
+    private void runRobotAndUpdateVisualisation() {
+        Robot robot = new Robot(mLanguage);
+
+        int startX = RobotSharedPreferences.getRobotStartX(getActivity());
+        int startY = RobotSharedPreferences.getRobotStartY(getActivity());
+        int roomWidth = RobotSharedPreferences.getRoomWidth(getActivity());
+        int roomLength = RobotSharedPreferences.getRoomLength(getActivity());
+
+        Rect2DRoom room = new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
+
+        robot.putInRoom(room);
+        robot.setProgram(mProgram.toString());
+
+        ArrayList<Point> robotPath = new ArrayList<Point>();
+        robotPath.add(robot.getRoom().getStartPosition());
+
+        RobotLocation res = null;
+        // Run the program to the end. Save the intermediate locations
+        // for visualising the path.
+        while (robot.hasMoreMoves()) {
+            res = robot.move();
+            robotPath.add(res.getPosition());
+        }
+
+        // Show the resulting state
+        if (res != null) {
+            String resString = getString(R.string.halting_position_of_robot, res.toString());
+            final TextView resultTextView = (TextView) getView().findViewById(R.id.robot_run_result);
+            resultTextView.setText(resString);
+        }
+
+        mResultListener.result(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom().getWalls());
     }
 
     private void showCurrentProgram() {

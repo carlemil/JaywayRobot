@@ -26,6 +26,22 @@ public class RobotSharedPreferences {
 
     private static SharedPreferences mPrefs;
 
+    public static int getRoomWidth(Context context) {
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_width_key), "5"));
+    }
+
+    public static int getRoomLength(Context context) {
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_length_key), "5"));
+    }
+
+    public static int getRobotStartX(Context context) {
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_X_key), "1"));
+    }
+
+    public static int getRobotStartY(Context context) {
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_Y_key), "1"));
+    }
+
     /**
      * Fetch a stored language.
      * 

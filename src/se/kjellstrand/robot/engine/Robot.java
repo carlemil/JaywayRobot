@@ -6,7 +6,7 @@ public class Robot {
 
     private static final String TAG = Robot.class.getCanonicalName();
 
-    private Room mRoom;
+    private Rect2DRoom mRoom;
 
     private RobotLocation mRobotLocation = new RobotLocation();
 
@@ -122,7 +122,7 @@ public class Robot {
         return res;
     }
 
-    public void putInRoom(Room room) {
+    public void putInRoom(Rect2DRoom room) {
         this.mRoom = room;
         this.mRobotLocation.setPosition(room.getStartPosition());
         this.mRobotLocation.setDirection(Direction.NORTH);
@@ -176,6 +176,10 @@ public class Robot {
                 Log.w(TAG, "Unknown Direction set: " + dir.toString());
                 break;
         }
+    }
+
+    public Rect2DRoom getRoom() {
+        return mRoom;
     }
 
 }
