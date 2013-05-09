@@ -3,11 +3,9 @@ package se.kjellstrand.robot.gui;
 import se.kjellstrand.robot.engine.Language;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 /**
- * 
+ * Convenience class for handling the persistence of some settings.
  * 
  */
 public class RobotSharedPreferences {
@@ -59,8 +57,6 @@ public class RobotSharedPreferences {
     public static void putLanguage(Context context, Language language) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putInt(LANGUAGE_KEY, language.ordinal());
-        Log.d("TAG", "Language " + language.toString());
-
         editor.commit();
     }
 
@@ -73,10 +69,10 @@ public class RobotSharedPreferences {
      */
     public static Language getLanguage(Context context) {
         Language language = Language.values()[getPrefs(context).getInt(LANGUAGE_KEY, 0)];
-        Log.d("TAG", "Language " + language.toString());
         return language;
     }
 
+    
     private static SharedPreferences getPrefs(Context context) {
         if (mPrefs == null) {
             mPrefs = context.getSharedPreferences(PREFS_NAME, 0);

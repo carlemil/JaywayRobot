@@ -33,12 +33,24 @@ public class ControlPanelFragment extends Fragment {
 
     private RobotResultListener resultListener;
 
+    /**
+     * Default language is English.
+     */
     private Language mLanguage = Language.ENGLISH;
 
+    /**
+     * Language specific char used to denote a forward command.
+     */
     private char mForwardChar;
 
+    /**
+     * Language specific char used to denote a left command.
+     */
     private char mLeftChar;
 
+    /**
+     * Language specific char used to denote a right command.
+     */
     private char mRightChar;
 
     @Override
@@ -65,7 +77,7 @@ public class ControlPanelFragment extends Fragment {
             mProgram = new StringBuilder(RobotSharedPreferences.getProgram(getActivity()));
             mLanguage = RobotSharedPreferences.getLanguage(getActivity());
         }
-mLanguage=Language.ENGLISH;
+
         setLanguage(mLanguage);
 
         final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
