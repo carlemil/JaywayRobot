@@ -19,54 +19,18 @@ public class Robot {
      */
     private int mIntructionPointer = 0;
 
-    private char mLeft;
-    private char mRight;
-    private char mForward;
+    public static final char TURN_LEFT = 'L';
+    public static final char TURN_RIGHT = 'R';
+    public static final char MOVE_FORWARD = 'F';
 
-    public Robot(Language language) {
-        setLanguage(language);
-    }
-    
-    public void setLanguage(Language language) {
-        
-        // TODO change to using English in the code, and hashmap for translations for display purposes ?
-        
-        switch (language) {
-            case SWEDISH:
-                mLeft = 'V';
-                mRight = 'H';
-                mForward = 'G';
-                break;
-
-            case ENGLISH:
-                mLeft = 'L';
-                mRight = 'R';
-                mForward = 'F';
-                break;
-
-            default:
-                Log.w(TAG, "Unknown language set: " + language.toString());
-                break;
-        }
-    }
-
-    public char getLeftChar() {
-        return mLeft;
-    }
-
-    public char getRightChar() {
-        return mRight;
-    }
-
-    public char getForwardChar() {
-        return mForward;
+    public Robot() {
     }
 
     public void setProgram(String program) {
         this.mProgram = program;
         this.mIntructionPointer = 0;
     }
-    
+
     public String getProgram() {
         return this.mProgram;
     }
@@ -94,19 +58,19 @@ public class Robot {
         if (hasMoreMoves()) {
             char command = mProgram.charAt(mIntructionPointer++);
 
-            if (command == mForward) {
+            if (command == MOVE_FORWARD) {
                 Log.d(TAG, "Move forward");
                 moveForward(mRobotLocation);
-            } else if (command == mLeft) {
+            } else if (command == TURN_LEFT) {
                 Log.d(TAG, "Turn left");
                 turnLeft(mRobotLocation);
-            } else if (command == mRight) {
+            } else if (command == TURN_RIGHT) {
                 Log.d(TAG, "Turn right");
                 turnRight(mRobotLocation);
             }
 
             Log.d(TAG, "Robot after moving: " + mRobotLocation.toString());
-            
+
             return mRobotLocation;
         }
         return null;

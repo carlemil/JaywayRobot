@@ -5,7 +5,8 @@ Assessment assignment for Jayway
 
 Todo:
 
-add walls to room.
+
+move values from views to members in control-panel.
 
 cleanup. remove menu stuff ?
 

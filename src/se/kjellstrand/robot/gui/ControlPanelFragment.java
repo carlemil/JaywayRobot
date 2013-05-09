@@ -27,26 +27,26 @@ public class ControlPanelFragment extends Fragment {
 
     protected static final String TAG = ControlPanelFragment.class.getCanonicalName();
 
+    private StringBuilder mProgram = new StringBuilder();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.control_panel, null);
         final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
 
-        CharSequence program = null;
-        
         if (savedInstanceState != null) {
             // populate from savedInstanceState
-            program = savedInstanceState.getString(RobotSharedPreferences.PROGRAM_KEY);
-            Log.d(TAG, "Read program from savedInstanceState: " + program);
+            mProgram = new StringBuilder(savedInstanceState.getString(RobotSharedPreferences.PROGRAM_KEY));
+            Log.d(TAG, "Read program from savedInstanceState: " + mProgram);
         } else {
             // Populate from sharedPrefs
-            program = RobotSharedPreferences.getProgram(getActivity());
-            Log.d(TAG, "Read program from RobotSharedPreferences: " + program);
+            mProgram = new StringBuilder(RobotSharedPreferences.getProgram(getActivity()));
+            Log.d(TAG, "Read program from RobotSharedPreferences: " + mProgram);
         }
-//        if(program!=null){
-        programEditText.setText(program);
-        //}
+
+        programEditText.setText(mProgram);
+
         return view;
     }
 
@@ -54,77 +54,71 @@ public class ControlPanelFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Robot robot = RobotApplication.getRobot();
         View view = getView();
 
         final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
 
-        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_left), robot
-                .getLeftChar());
-        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_right), robot.getRightChar());
-        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_forward), robot.getForwardChar());
+        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_left), Robot.TURN_LEFT);
+        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_right), Robot.TURN_RIGHT);
+        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_forward), Robot.MOVE_FORWARD);
 
         setDeleteButtonClickListener(programEditText, view.findViewById(R.id.button_delete));
 
-        setPlayButtonClickListener(programEditText, view.findViewById(R.id.button_play),
+        setPlayButtonClickListener(view.findViewById(R.id.button_play),
                 (TextView) view.findViewById(R.id.robot_run_result));
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        View view = getView();
-        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
 
-        String program = programEditText.getText().toString();
-        Log.d(TAG, "Write program to shared prefs: " + program);
-        if (program != null) {
-            RobotSharedPreferences.putProgram(getActivity(), program);
+        Log.d(TAG, "Write program to shared prefs: " + mProgram);
+        if (mProgram != null) {
+            RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        final EditText programEditText = (EditText) getView().findViewById(R.id.edit_text_program);
-        String program = programEditText.getText().toString();
-        outState.putString(RobotSharedPreferences.PROGRAM_KEY, program);
+        outState.putString(RobotSharedPreferences.PROGRAM_KEY, mProgram.toString());
     }
 
-    private void setComandButtonClickListener(final EditText program, View view, final char c) {
+    private void setComandButtonClickListener(final EditText edittext, View view, final char c) {
         view.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                program.getText().append(c);
+                mProgram.append(c);
+                edittext.setText(mProgram.toString());
             }
         });
     }
 
-    private void setDeleteButtonClickListener(final EditText program, View view) {
-        view.setOnClickListener(new OnClickListener() {
+    private void setDeleteButtonClickListener(final EditText edittext, View button) {
+        button.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                Editable text = program.getText();
-                int l = text.length();
+                int l = mProgram.length();
                 if (l > 0) {
-                    text.delete(l - 1, l);
+                    mProgram.deleteCharAt(mProgram.length() - 1);
                 }
+                edittext.setText(mProgram);
             }
         });
     }
 
-    private void setPlayButtonClickListener(final EditText program, View view, final TextView resultTextView) {
-        view.setOnClickListener(new OnClickListener() {
+    private void setPlayButtonClickListener(View button, final TextView resultTextView) {
+        button.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                Editable instructions = program.getText();
-                Robot r = RobotApplication.getRobot();
-                r.setProgram(instructions.toString());
+                Robot robot = new Robot();
+                robot.setProgram(mProgram.toString());
+
                 // TODO, config and not HARDCODED.
                 Rect dim = new Rect(0, 0, 5, 5);
                 Point pos = new Point(1, 2);
 
                 Room room = new Rect2DRoom(dim, pos);
-                r.putInRoom(room);
+                robot.putInRoom(room);
 
                 // Run the program to the end.
-                RobotLocation res = r.moveUntilEnd();
+                RobotLocation res = robot.moveUntilEnd();
 
                 // Show the resulting state
                 String resString = getString(R.string.halting_position_of_robot, res.toString());
