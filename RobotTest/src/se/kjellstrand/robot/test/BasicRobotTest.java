@@ -10,11 +10,10 @@ import junit.framework.TestCase;
 
 public class BasicRobotTest extends TestCase {
 
-    private static final String N = "N";
-    private static final String W = "W";
-    private static final String E = "E";
-    private static final String S = "S";
-
+    private static final char N = 'N';
+    private static final char W = 'W';
+    private static final char E = 'E';
+    private static final char S = 'S';
 
     public BasicRobotTest(String name) {
         super(name);
@@ -28,95 +27,90 @@ public class BasicRobotTest extends TestCase {
         super.tearDown();
     }
 
-    public void testBasicRobotMoves(){
-        Rect dim = new Rect(0, 0, 0, 0);
-        Point startPos = new Point(0, 0);
-        Room room = new Rect2DRoom(dim, startPos);
-        Robot robot = new Robot(Language.SWEDISH);
-        
+    public void testBasicRobotMoves() {
+        Point startPos = new Point(1, 1);
+        Room room = new Rect2DRoom(0, 0, startPos);
+        Robot robot = new Robot();
+
         assertEquals(null, robot.move());
 
         robot.putInRoom(room);
         assertEquals(null, robot.move());
 
         // set instructions to, "one step forward".
-        robot.setProgram("G");
+        robot.setProgram("F");
         // Still a 0,0 size room
-        assertEquals("0 0 "+N, robot.move());
+        assertEquals("1 1 " + N, robot.move().toString());
 
         // create a room 5x5, and put the robot in it.
-        dim = new Rect(0, 0, 5, 5);
-        room = new Rect2DRoom(dim, startPos);
+        room = new Rect2DRoom(5, 5, startPos);
         robot.putInRoom(room);
-        assertEquals("0 1 "+N, robot.move());
+        assertEquals("1 2 " + N, robot.move().toString());
 
         // set instructions to, "left".
-        robot.setProgram("V");
-        assertEquals("0 1 "+W, robot.move());
+        robot.setProgram("L");
+        assertEquals("1 2 " + W, robot.move().toString());
 
         // set instructions to, "right".
-        robot.setProgram("H");
-        assertEquals("0 1 "+N, robot.move());
+        robot.setProgram("R");
+        assertEquals("1 3 " + N, robot.move().toString());
 
         // set instructions to, "right".
-        robot.setProgram("H");
-        assertEquals("0 1 "+E, robot.move());
-        
+        robot.setProgram("R");
+        assertEquals("2 3 " + E, robot.move().toString());
+
     }
 
-    public void testRobotMovesCommands1(){
-        Rect dim = new Rect(0, 0, 5, 5);
+    public void testRobotMovesCommands1() {
+
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(dim, startPos);
-        Robot robot = new Robot(Language.SWEDISH);
+        Room room = new Rect2DRoom(5, 5, startPos);
+        Robot robot = new Robot();
         robot.putInRoom(room);
-              
-        robot.setProgram("GHGGVGVVGG");
-        assertEquals("3 1 "+S, robot.moveUntilEnd());
+
+        robot.setProgram("FRFFLFLLFF");
+        assertEquals("3 1 " + S, robot.moveUntilEnd().toString());
     }
 
-    public void testRobotMovesCommands2(){
-        Rect dim = new Rect(0, 0, 5, 5);
+    public void testRobotMovesCommands2() {
         Point startPos = new Point(1, 2);
-        Room room = new Rect2DRoom(dim, startPos);
-        Robot robot = new Robot(Language.SWEDISH);
+        Room room = new Rect2DRoom(5, 5, startPos);
+        Robot robot = new Robot();
         robot.putInRoom(room);
-              
-        robot.setProgram("HGHGGHGHG");
-        assertEquals("1 1 "+N, robot.moveUntilEnd());
+
+        robot.setProgram("RFRFFRFRF");
+        assertEquals("1 3 " + N, robot.moveUntilEnd().toString());
     }
 
-    public void testRobotMovesCommandsRoomBoundingBox1(){
-        Rect dim = new Rect(0, 0, 3, 3);
+    public void testRobotMovesCommandsRoomBoundingBox1() {
+
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(dim, startPos);
-        Robot robot = new Robot(Language.SWEDISH);
+        Room room = new Rect2DRoom(3, 3, startPos);
+        Robot robot = new Robot();
         robot.putInRoom(room);
-              
-        robot.setProgram("GGG");
-        assertEquals("1 2 "+N, robot.moveUntilEnd());
+
+        robot.setProgram("FFF");
+        assertEquals("1 3 " + N, robot.moveUntilEnd().toString());
     }
-    
-    public void testRobotMovesCommandsRoomBoundingBox2(){
-        Rect dim = new Rect(0, 0, 3, 3);
+
+    public void testRobotMovesCommandsRoomBoundingBox2() {
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(dim, startPos);
-        Robot robot = new Robot(Language.SWEDISH);
+        Room room = new Rect2DRoom(3, 3, startPos);
+        Robot robot = new Robot();
         robot.putInRoom(room);
-              
-        robot.setProgram("HGGG");
-        assertEquals("2 1 "+E, robot.moveUntilEnd());
+
+        robot.setProgram("RFFFFFF");
+        assertEquals("3 1 " + E, robot.moveUntilEnd().toString());
     }
-    
-    public void testRobotMovesCommandsRoomBoundingBox3(){
-        Rect dim = new Rect(0, 0, 3, 3);
+
+    public void testRobotMovesCommandsRoomBoundingBox3() {
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(dim, startPos);
-        Robot robot = new Robot(Language.SWEDISH);
+        Room room = new Rect2DRoom(6, 8, startPos);
+        Robot robot = new Robot();
         robot.putInRoom(room);
-              
-        robot.setProgram("HHGGGHGGG");
-        assertEquals("0 0 "+W, robot.moveUntilEnd());
+
+        robot.setProgram("RRFFFRFRF");
+        assertEquals("1 3 " + N, robot.moveUntilEnd().toString());
     }
-    
+
 }
