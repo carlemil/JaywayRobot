@@ -31,7 +31,7 @@ public class ControlPanelFragment extends Fragment {
 
     private StringBuilder mProgram = new StringBuilder();
 
-    private RobotResultListener resultListener;
+    private RobotResultListener mResultListener;
 
     /**
      * Default language is English.
@@ -57,7 +57,7 @@ public class ControlPanelFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            resultListener = (RobotResultListener) getActivity();
+            mResultListener = (RobotResultListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement onButtonPressed");
         }
@@ -104,7 +104,7 @@ public class ControlPanelFragment extends Fragment {
         if (language != mLanguage) {
             Log.d(TAG, "New language set: " + language);
             setLanguage(language);
-            // Reset out program since the language changed.
+            // Reset our program since the language changed.
             mProgram = new StringBuilder();
             showCurrentProgram();
         }
@@ -119,9 +119,9 @@ public class ControlPanelFragment extends Fragment {
                 (TextView) view.findViewById(R.id.robot_run_result));
     }
 
-    private void showCurrentProgram() {
-        EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
-        edittext.setText(mProgram.toString());
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(RobotSharedPreferences.PROGRAM_KEY, mProgram.toString());
     }
 
     @Override
@@ -134,13 +134,9 @@ public class ControlPanelFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString(RobotSharedPreferences.PROGRAM_KEY, mProgram.toString());
-    }
-
     private void setComandButtonClickListener(View view, final char c) {
         view.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
                 mProgram.append(c);
                 showCurrentProgram();
@@ -150,6 +146,7 @@ public class ControlPanelFragment extends Fragment {
 
     private void setDeleteButtonClickListener(View button) {
         button.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
                 int l = mProgram.length();
                 if (l > 0) {
@@ -161,8 +158,16 @@ public class ControlPanelFragment extends Fragment {
         });
     }
 
+    private void setLanguage(Language language) {
+        mLanguage = language;
+        mForwardChar = Language.getForwardChar(language);
+        mLeftChar = Language.getLeftChar(language);
+        mRightChar = Language.getRightChar(language);
+    }
+
     private void setPlayButtonClickListener(View button, final TextView resultTextView) {
         button.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Robot robot = new Robot(mLanguage);
                 robot.setProgram(mProgram.toString());
@@ -189,18 +194,14 @@ public class ControlPanelFragment extends Fragment {
                     resultTextView.setText(resString);
                 }
 
-                resultListener.result(robotPath.toArray(new Point[robotPath.size()]), room.getWalls());
+                mResultListener.result(robotPath.toArray(new Point[robotPath.size()]), room.getWalls());
             }
         });
     }
 
-    private void setLanguage(Language language) {
-        mLanguage = language;
-        mForwardChar = Language.getForwardChar(language);
-        mLeftChar = Language.getLeftChar(language);
-        mRightChar = Language.getRightChar(language);
+    private void showCurrentProgram() {
+        EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
+        edittext.setText(mProgram.toString());
     }
-
-   
 
 }

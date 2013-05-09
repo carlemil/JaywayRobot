@@ -8,6 +8,22 @@ public enum Language {
     SWEDISH, ENGLISH;
 
     /**
+     * Returns the char used to display "Forward" in the selected language.
+     * 
+     * @param language
+     * 
+     * @return char used for displaying a forward command.
+     */
+    public static char getForwardChar(Language language) {
+        switch (language) {
+            case SWEDISH:
+                return 'G';
+            default:
+                return 'F';
+        }
+    }
+
+    /**
      * Returns the char used to display "Left" in the selected language.
      * 
      * @return char used for displaying a left command.
@@ -32,21 +48,6 @@ public enum Language {
                 return 'H';
             default:
                 return 'R';
-        }
-    }
-
-    /**
-     * Returns the char used to display "Forward" in the selected language.
-     * @param language 
-     * 
-     * @return char used for displaying a forward command.
-     */
-    public static char getForwardChar(Language language) {
-        switch (language) {
-            case SWEDISH:
-                return 'G';
-            default:
-                return 'F';
         }
     }
 }

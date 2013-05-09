@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * Inflates and shows the settings layout. Also handles updating of the settings
@@ -16,21 +17,8 @@ import android.preference.PreferenceManager;
  */
 public class SettingsFragment extends PreferenceFragment {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.preferences);
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-
-        prefs.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
-    }
-
     /**
-     * Listens for changes in SharedPreference, handles updates of the ui and
-     * callback to the ControlPanel.
+     * Listens for changes in SharedPreference, handles updates of the ui.
      */
     OnSharedPreferenceChangeListener mOnSharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
@@ -38,18 +26,58 @@ public class SettingsFragment extends PreferenceFragment {
 
             Activity activity = getActivity();
             if (activity != null) {
-                // Handle updates of the Charset setting.
-                String prefCharsetForDigitsKey = activity.getResources().getString(R.string.pref_languages_key);
-                if (key.equals(prefCharsetForDigitsKey)) {
-                    Preference languagesPref = findPreference(key);
-                    String charset = sharedPreferences.getString(key,
-                            getResources().getString(R.string.pref_languages_key));
-                    String format = getResources().getString(R.string.pref_languages_summary);
-                    // Set summary to be the user-description for the selected
-                    // value
-                    languagesPref.setSummary(String.format(format, charset));
-                }
+                updatePrefMenuAlt(sharedPreferences, key, activity,
+                        R.string.pref_languages_key, R.string.pref_languages_summary);
+                updatePrefMenuAlt(sharedPreferences, key, activity,
+                        R.string.pref_room_width_key, R.string.pref_room_width_summary);
+                updatePrefMenuAlt(sharedPreferences, key, activity,
+                        R.string.pref_room_length_key, R.string.pref_room_length_summary);
+                updatePrefMenuAlt(sharedPreferences, key, activity,
+                        R.string.pref_start_X_key, R.string.pref_start_X_summary);
+                updatePrefMenuAlt(sharedPreferences, key, activity,
+                        R.string.pref_start_Y_key, R.string.pref_start_Y_summary);
             }
         }
     };
+
+    private void updatePrefMenuAlt(SharedPreferences sharedPreferences, String key, Activity activity,
+            int updateKey, int summaryId) {
+        if (key.equals(activity.getResources().getString(updateKey))) {
+            Preference pref = findPreference(key);
+            String value = sharedPreferences.getString(key,
+                    getResources().getString(updateKey));
+            String format = getResources().getString(summaryId);
+            // Set summary to be the user-description for the selected value
+            pref.setSummary(String.format(format, value));
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
+
+        String key = getActivity().getResources().getString(R.string.pref_room_width_key);
+        updatePrefMenuAlt(sharedPreferences, key, getActivity(),
+                R.string.pref_room_width_key, R.string.pref_room_width_summary);
+
+        key = getActivity().getResources().getString(R.string.pref_room_length_key);
+        updatePrefMenuAlt(sharedPreferences, key, getActivity(),
+                R.string.pref_room_length_key, R.string.pref_room_length_summary);
+
+        key = getActivity().getResources().getString(R.string.pref_start_X_key);
+        updatePrefMenuAlt(sharedPreferences, key, getActivity(),
+                R.string.pref_start_X_key, R.string.pref_start_X_summary);
+
+        key = getActivity().getResources().getString(R.string.pref_start_Y_key);
+        updatePrefMenuAlt(sharedPreferences, key, getActivity(),
+                R.string.pref_start_Y_key, R.string.pref_start_Y_summary);
+
+    }
 }

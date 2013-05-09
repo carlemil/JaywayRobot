@@ -2,12 +2,45 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ListPreference
+        android:defaultValue="@string/english"
         android:dialogTitle="@string/pref_languages_dialog_title"
         android:entries="@array/list_of_languages"
         android:entryValues="@array/list_of_languages"
         android:key="@string/pref_languages_key"
-        android:defaultValue="@string/english"
         android:summary="@string/pref_languages_summary"
         android:title="@string/pref_languages_title" />
+
+    <EditTextPreference
+        android:defaultValue="@string/default_room_width"
+        android:dialogMessage="@string/pref_room_width_message"
+        android:dialogTitle="@string/pref_room_width_dialog_title"
+        android:inputType="number"
+        android:key="@string/pref_room_width_key"
+        android:summary="@string/pref_room_width_summary"
+        android:title="@string/pref_room_width_title" />
+    <EditTextPreference
+        android:defaultValue="@string/default_room_length"
+        android:dialogMessage="@string/pref_room_length_message"
+        android:dialogTitle="@string/pref_room_length_dialog_title"
+        android:inputType="number"
+        android:key="@string/pref_room_length_key"
+        android:summary="@string/pref_room_length_summary"
+        android:title="@string/pref_room_length_title" />
+    <EditTextPreference
+        android:defaultValue="@string/default_start_X"
+        android:dialogMessage="@string/pref_start_X_message"
+        android:dialogTitle="@string/pref_start_X_dialog_title"
+        android:inputType="number"
+        android:key="@string/pref_start_X_key"
+        android:summary="@string/pref_start_X_summary"
+        android:title="@string/pref_start_X_title" />
+    <EditTextPreference
+        android:defaultValue="@string/default_start_Y"
+        android:dialogMessage="@string/pref_start_Y_message"
+        android:dialogTitle="@string/pref_start_Y_dialog_title"
+        android:inputType="number"
+        android:key="@string/pref_start_Y_key"
+        android:summary="@string/pref_start_Y_summary"
+        android:title="@string/pref_start_Y_title" />
 
 </PreferenceScreen>

@@ -23,13 +23,6 @@ public class MainActivity extends Activity implements RobotResultListener {
     }
 
     @Override
-    public void result(Point[] robotPath, Point[] room) {
-        VisualiserFragment visualiserFragment = (VisualiserFragment) getFragmentManager().findFragmentById(
-                R.id.frag_2);
-        visualiserFragment.setRobotAndRoom(robotPath, room);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
@@ -49,6 +42,13 @@ public class MainActivity extends Activity implements RobotResultListener {
         }
 
         return true;
+    }
+
+    @Override
+    public void result(Point[] robotPath, Point[] room) {
+        VisualiserFragment visualiserFragment = (VisualiserFragment) getFragmentManager().findFragmentById(
+                R.id.visualiser_fragment);
+        visualiserFragment.setRobotAndRoom(robotPath, room);
     }
 
 }

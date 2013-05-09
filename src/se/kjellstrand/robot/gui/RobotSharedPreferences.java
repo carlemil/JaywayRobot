@@ -27,15 +27,27 @@ public class RobotSharedPreferences {
     private static SharedPreferences mPrefs;
 
     /**
-     * Store a program.
+     * Fetch a stored language.
      * 
      * @param context of the activity
-     * @param program to be stored.
+     * 
+     * @return the language.
      */
-    public static void putProgram(Context context, String program) {
-        SharedPreferences.Editor editor = getPrefs(context).edit();
-        editor.putString(PROGRAM_KEY, program);
-        editor.commit();
+    public static Language getLanguage(Context context) {
+        String languagePrefKey = context.getString(R.string.pref_languages_key);
+        String lang = getPrefs(context).getString(languagePrefKey, null);
+        if (lang != null && lang.equals(context.getString(R.string.swedish))) {
+            return Language.SWEDISH;
+        } else {
+            return Language.ENGLISH;
+        }
+    }
+
+    private static SharedPreferences getPrefs(Context context) {
+        if (mPrefs == null) {
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        }
+        return mPrefs;
     }
 
     /**
@@ -61,27 +73,15 @@ public class RobotSharedPreferences {
     }
 
     /**
-     * Fetch a stored language.
+     * Store a program.
      * 
      * @param context of the activity
-     * 
-     * @return the language.
+     * @param program to be stored.
      */
-    public static Language getLanguage(Context context) {
-        String languagePrefKey = context.getString(R.string.pref_languages_key);
-        String lang = getPrefs(context).getString(languagePrefKey, null);
-        if (lang.equals(context.getString(R.string.swedish))) {
-            return Language.SWEDISH;
-        } else {
-            return Language.ENGLISH;
-        }
-    }
-
-    private static SharedPreferences getPrefs(Context context) {
-        if (mPrefs == null) {
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        }
-        return mPrefs;
+    public static void putProgram(Context context, String program) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putString(PROGRAM_KEY, program);
+        editor.commit();
     }
 
 }

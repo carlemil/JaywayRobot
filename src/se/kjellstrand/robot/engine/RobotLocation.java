@@ -8,10 +8,10 @@ public class RobotLocation {
 
     private Point mPosition = new Point();
 
-    public RobotLocation(){
-        
+    public RobotLocation() {
+
     }
-    
+
     public RobotLocation(RobotLocation robotLocation) {
         mDirection = robotLocation.getDirection();
         mPosition.x = robotLocation.getPosition().x;
@@ -22,12 +22,12 @@ public class RobotLocation {
         return mDirection;
     }
 
-    public void setDirection(Direction direction) {
-        this.mDirection = direction;
-    }
-
     public Point getPosition() {
         return mPosition;
+    }
+
+    public void setDirection(Direction direction) {
+        this.mDirection = direction;
     }
 
     public void setPosition(Point position) {

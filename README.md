@@ -5,9 +5,7 @@ Assessment assignment for Jayway
 
 Todo:
 
-triger language change on settings change
-
-config room size start pos
+use config room size start pos
 
 ö v n s
 

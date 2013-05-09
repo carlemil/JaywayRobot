@@ -37,32 +37,19 @@ public class Robot {
         RIGHT = Language.getRightChar(language);
     }
 
-    public void setProgram(String program) {
-        this.mProgram = program;
-        this.mIntructionPointer = 0;
-    }
-
     public String getProgram() {
         return this.mProgram;
-    }
-
-    public void putInRoom(Room room) {
-        this.mRoom = room;
-        this.mRobotLocation.setPosition(room.getStartPosition());
-        this.mRobotLocation.setDirection(Direction.NORTH);
-        this.mIntructionPointer = 0;
     }
 
     public RobotLocation getRobotPosition() {
         return mRobotLocation;
     }
 
-    public RobotLocation moveUntilEnd() {
-        RobotLocation res = null;
-        while (hasMoreMoves()) {
-            res = move();
+    public boolean hasMoreMoves() {
+        if (mProgram != null && mProgram.length() > mIntructionPointer) {
+            return true;
         }
-        return res;
+        return false;
     }
 
     public RobotLocation move() {
@@ -127,6 +114,26 @@ public class Robot {
         }
     }
 
+    public RobotLocation moveUntilEnd() {
+        RobotLocation res = null;
+        while (hasMoreMoves()) {
+            res = move();
+        }
+        return res;
+    }
+
+    public void putInRoom(Room room) {
+        this.mRoom = room;
+        this.mRobotLocation.setPosition(room.getStartPosition());
+        this.mRobotLocation.setDirection(Direction.NORTH);
+        this.mIntructionPointer = 0;
+    }
+
+    public void setProgram(String program) {
+        this.mProgram = program;
+        this.mIntructionPointer = 0;
+    }
+
     private void turnLeft(RobotLocation coord) {
         Direction dir = coord.getDirection();
         switch (dir) {
@@ -169,13 +176,6 @@ public class Robot {
                 Log.w(TAG, "Unknown Direction set: " + dir.toString());
                 break;
         }
-    }
-
-    public boolean hasMoreMoves() {
-        if (mProgram != null && mProgram.length() > mIntructionPointer) {
-            return true;
-        }
-        return false;
     }
 
 }

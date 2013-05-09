@@ -2,16 +2,16 @@
 <resources>
 
     <string name="app_name">JaywayRobot</string>
-    <string name="action_settings">Settings</string>
-    
+
+    <!-- Keys -->
     <string name="left_arrow">\u21b6</string>
     <string name="up_arrow">\u2191</string>
     <string name="right_arrow">\u21b7</string>
     <string name="delete">\u25c0</string>
     <string name="play">\u25b6</string>
-    
+
+    <!-- Status strings -->
     <string name="halting_position_of_robot">Halting position of Robot: %s</string>
-    
     <string name="unknown_position">unknown</string>
 
     <!-- String related to the charsets used for the digits -->
@@ -21,10 +21,43 @@
     <string name="pref_languages_key">pref_languages_key</string>
     <string name="english">English</string>
     <string name="swedish">Swedish</string>
-    
+
     <string-array name="list_of_languages">
         <item>@string/english</item>
         <item>@string/swedish</item>
     </string-array>
-    
+
+    <!-- Settings for a room -->
+    <string name="pref_room_width_title">Room width</string>
+    <string name="pref_room_width_message">How wide should the room be?</string>
+    <string name="pref_room_width_summary">Current room width %s</string>
+    <string name="pref_room_width_key">pref_room_width_key</string>
+    <string name="pref_room_width_dialog_title">Width!</string>
+    <string name="pref_room_length_title">Room length</string>
+    <string name="pref_room_length_message">How long should the room be?</string>
+    <string name="pref_room_length_summary">Current room length %s</string>
+    <string name="pref_room_length_key">pref_room_length_key</string>
+    <string name="pref_room_length_dialog_title">Length!</string>
+
+    <!-- Start position settings -->
+    <string name="pref_start_X_title">Robot start position X</string>
+    <string name="pref_start_X_message">Where should the robot start?</string>
+    <string name="pref_start_X_summary">Current start X: %s</string>
+    <string name="pref_start_X_key">pref_startX_key</string>
+    <string name="pref_start_X_dialog_title">X!</string>
+    <string name="pref_start_Y_title">Robot start position Y</string>
+    <string name="pref_start_Y_message">Where should the robot start?</string>
+    <string name="pref_start_Y_summary">Current start Y: %s</string>
+    <string name="pref_start_Y_key">pref_startY_key</string>
+    <string name="pref_start_Y_dialog_title">Y!</string>
+    <string name="default_room_width">5</string>
+    <string name="default_room_length">5</string>
+    <string name="default_start_X">2</string>
+    <string name="default_start_Y">2</string>
+
+    <!-- Menu actions -->
+    <string name="action_settings">Settings</string>
+    <string name="action_reset_robot">Reset robot</string>
+    <string name="action_clear_program">Clear program</string>
+
 </resources>

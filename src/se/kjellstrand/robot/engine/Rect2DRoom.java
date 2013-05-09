@@ -24,16 +24,16 @@ public class Rect2DRoom implements RoomWithWalls {
     }
 
     @Override
+    public boolean contains(Point pos) {
+        return pos.x > 0 && pos.x <= mRoomWidth && pos.y > 0 && pos.y <= mRoomHeight;
+    }
+
+    @Override
     public Point getStartPosition() {
         Point p = new Point();
         p.x = mStartPosition.x;
         p.y = mStartPosition.y;
         return p;
-    }
-
-    @Override
-    public boolean contains(Point pos) {
-        return pos.x > 0 && pos.x <= mRoomWidth && pos.y > 0 && pos.y <= mRoomHeight;
     }
 
     @Override
