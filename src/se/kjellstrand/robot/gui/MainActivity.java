@@ -20,7 +20,7 @@ public class MainActivity extends FragmentActivity implements RobotResultListene
     }
 
     @Override
-    public void result(RobotLocation[] robotPath, Point[] room) {
+    public void result(Point[] robotPath, Point[] room) {
         VisualiserFragment visualiserFragment = (VisualiserFragment) getSupportFragmentManager().findFragmentById(
                 R.id.frag_2);
         visualiserFragment.setRobotAndRoom(robotPath, room);

@@ -129,27 +129,28 @@ public class ControlPanelFragment extends Fragment {
                 robot.setProgram(mProgram.toString());
 
                 // TODO, config and not HARDCODED.
-                RoomWithWalls room = new Rect2DRoom(8, 5, new Point(1, 2));
+                RoomWithWalls room = new Rect2DRoom(9, 5, new Point(1, 2));
 
                 robot.putInRoom(room);
 
-                ArrayList<RobotLocation> robotPath = new ArrayList<RobotLocation>();
+                ArrayList<Point> robotPath = new ArrayList<Point>();
+                robotPath.add(room.getStartPosition());
 
                 RobotLocation res = null;
                 // Run the program to the end. Save the intermediate locations
                 // for visualising the path.
                 while (robot.hasMoreMoves()) {
                     res = robot.move();
-                    robotPath.add(res);
+                    robotPath.add(res.getPosition());
                 }
-
+Log.d(TAG, "list of moves length: "+robotPath.size());
                 // Show the resulting state
                 if (res != null) {
                     String resString = getString(R.string.halting_position_of_robot, res.toString());
                     resultTextView.setText(resString);
                 }
 
-                resultListener.result(robotPath.toArray(new RobotLocation[robotPath.size()]), room.getWalls());
+                resultListener.result(robotPath.toArray(new Point[robotPath.size()]), room.getWalls());
             }
         });
     }

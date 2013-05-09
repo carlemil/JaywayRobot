@@ -35,29 +35,29 @@ public class VisualiserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.visualiser, null);
     }
-    
-    public void setRobotAndRoom(RobotLocation[] robotLocationList, Point[] room){
+
+    public void setRobotAndRoom(Point[] robotPath, Point[] room) {
         RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
         setRoom(room, rrv);
-        setRobotPath(robotLocationList, rrv);
-        
+        setRobotPath(robotPath, rrv);
+
         rrv.invalidate();
     }
 
-    private void setRobotPath(RobotLocation[] robotLocationList, RobotRoomView rrv) {
+    private void setRobotPath(Point[] robotLocationList, RobotRoomView rrv) {
 
-        if (robotLocationList.length >= 3) {
-            Path robotPath = new Path();
-            robotPath.moveTo(robotLocationList[0].getPosition().x,
-                    robotLocationList[0].getPosition().y);
+        Path robotPath = new Path();
+        robotPath.moveTo(robotLocationList[0].x,
+                robotLocationList[0].y);
 
-            for (RobotLocation rl : robotLocationList) {
-                // TODO Change to quadTo
-                robotPath.lineTo(rl.getPosition().x, rl.getPosition().y);
-            }
-            
-            rrv.setRobotPath(robotPath);
+        for (int i=0;i<robotLocationList.length;i++) {
+            Point p = robotLocationList[i];
+            // TODO Change to quadTo
+            robotPath.lineTo(p.x, p.y);
+            Log.d(TAG,"path coord: "+p.x+" - "+p.y);
         }
+
+        rrv.setRobotPath(robotPath);
     }
 
     private void setRoom(Point[] room, RobotRoomView rrv) {
