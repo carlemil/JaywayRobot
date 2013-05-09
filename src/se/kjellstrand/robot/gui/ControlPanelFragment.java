@@ -3,6 +3,7 @@ package se.kjellstrand.robot.gui;
 import java.util.ArrayList;
 
 import se.kjellstrand.robot.R;
+import se.kjellstrand.robot.engine.Language;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
@@ -32,6 +33,14 @@ public class ControlPanelFragment extends Fragment {
 
     private RobotResultListener resultListener;
 
+    private Language mLanguage = Language.ENGLISH;
+
+    private char mForwardChar;
+
+    private char mLeftChar;
+
+    private char mRightChar;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -46,7 +55,6 @@ public class ControlPanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.control_panel, null);
-        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
 
         if (savedInstanceState != null) {
             // populate from savedInstanceState
@@ -55,9 +63,12 @@ public class ControlPanelFragment extends Fragment {
         } else {
             // Populate from sharedPrefs
             mProgram = new StringBuilder(RobotSharedPreferences.getProgram(getActivity()));
-            Log.d(TAG, "Read program from RobotSharedPreferences: " + mProgram);
+            mLanguage = RobotSharedPreferences.getLanguage(getActivity());
         }
+mLanguage=Language.ENGLISH;
+        setLanguage(mLanguage);
 
+        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
         programEditText.setText(mProgram);
 
         String resString = getString(R.string.halting_position_of_robot,
@@ -73,9 +84,9 @@ public class ControlPanelFragment extends Fragment {
 
         View view = getView();
 
-        setComandButtonClickListener(view.findViewById(R.id.button_left), Robot.TURN_LEFT);
-        setComandButtonClickListener(view.findViewById(R.id.button_right), Robot.TURN_RIGHT);
-        setComandButtonClickListener(view.findViewById(R.id.button_forward), Robot.MOVE_FORWARD);
+        setComandButtonClickListener(view.findViewById(R.id.button_left), mLeftChar);
+        setComandButtonClickListener(view.findViewById(R.id.button_right), mRightChar);
+        setComandButtonClickListener(view.findViewById(R.id.button_forward), mForwardChar);
 
         setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
 
@@ -91,6 +102,8 @@ public class ControlPanelFragment extends Fragment {
         if (mProgram != null) {
             RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
         }
+        RobotSharedPreferences.putLanguage(getActivity(), mLanguage);
+
     }
 
     @Override
@@ -124,7 +137,7 @@ public class ControlPanelFragment extends Fragment {
     private void setPlayButtonClickListener(View button, final TextView resultTextView) {
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
-                Robot robot = new Robot();
+                Robot robot = new Robot(mLanguage);
                 robot.setProgram(mProgram.toString());
 
                 // TODO, config and not HARDCODED.
@@ -152,6 +165,12 @@ public class ControlPanelFragment extends Fragment {
                 resultListener.result(robotPath.toArray(new Point[robotPath.size()]), room.getWalls());
             }
         });
+    }
+
+    private void setLanguage(Language language) {
+        mForwardChar = Language.getForwardChar(language);
+        mLeftChar = Language.getLeftChar(language);
+        mRightChar = Language.getRightChar(language);
     }
 
 }

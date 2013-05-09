@@ -14,17 +14,27 @@ public class Robot {
      * Contains the program for a robot.
      */
     private String mProgram;
-    
+
     /**
      * Points to the current instruction of the program/robot.
      */
     private int mIntructionPointer = 0;
 
-    public static final char TURN_LEFT = 'L';
-    public static final char TURN_RIGHT = 'R';
-    public static final char MOVE_FORWARD = 'F';
+    private final char FORWARD;
+
+    private final char LEFT;
+
+    private final char RIGHT;
 
     public Robot() {
+        this(Language.ENGLISH);
+    }
+
+    public Robot(Language language) {
+        Log.d(TAG, "Robot started, languare: " + language.toString());
+        FORWARD = Language.getForwardChar(language);
+        LEFT = Language.getLeftChar(language);
+        RIGHT = Language.getRightChar(language);
     }
 
     public void setProgram(String program) {
@@ -59,14 +69,14 @@ public class Robot {
         if (hasMoreMoves()) {
             char command = mProgram.charAt(mIntructionPointer++);
 
-            if (command == MOVE_FORWARD) {
+            if (command == FORWARD) {
                 Log.d(TAG, "Move forward");
                 moveForward(mRobotLocation);
-            } else if (command == TURN_LEFT) {
+            } else if (command == LEFT) {
                 Log.d(TAG, "Turn left, then move forward.");
                 turnLeft(mRobotLocation);
                 moveForward(mRobotLocation);
-            } else if (command == TURN_RIGHT) {
+            } else if (command == RIGHT) {
                 Log.d(TAG, "Turn right, then move forward.");
                 turnRight(mRobotLocation);
                 moveForward(mRobotLocation);
