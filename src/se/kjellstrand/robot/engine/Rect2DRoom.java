@@ -1,7 +1,6 @@
 package se.kjellstrand.robot.engine;
 
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.Log;
 
 /**
@@ -38,9 +37,9 @@ public class Rect2DRoom implements RoomWithWalls {
     public Point[] getWalls() {
         Point[] walls = new Point[] {
                 new Point(-1, -1),
-                new Point(mRoomWidth, -1),
-                new Point(mRoomWidth, mRoomHeight),
-                new Point(-1, mRoomHeight)
+                new Point(mRoomWidth + 1, -1),
+                new Point(mRoomWidth + 1, mRoomHeight + 1),
+                new Point(-1, mRoomHeight + 1)
         };
         return walls;
     }
