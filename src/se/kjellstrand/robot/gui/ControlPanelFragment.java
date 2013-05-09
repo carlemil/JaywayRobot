@@ -56,13 +56,11 @@ public class ControlPanelFragment extends Fragment {
 
         View view = getView();
 
-        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
+        setComandButtonClickListener(view.findViewById(R.id.button_left), Robot.TURN_LEFT);
+        setComandButtonClickListener(view.findViewById(R.id.button_right), Robot.TURN_RIGHT);
+        setComandButtonClickListener(view.findViewById(R.id.button_forward), Robot.MOVE_FORWARD);
 
-        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_left), Robot.TURN_LEFT);
-        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_right), Robot.TURN_RIGHT);
-        setComandButtonClickListener(programEditText, view.findViewById(R.id.button_forward), Robot.MOVE_FORWARD);
-
-        setDeleteButtonClickListener(programEditText, view.findViewById(R.id.button_delete));
+        setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
 
         setPlayButtonClickListener(view.findViewById(R.id.button_play),
                 (TextView) view.findViewById(R.id.robot_run_result));
@@ -83,22 +81,24 @@ public class ControlPanelFragment extends Fragment {
         outState.putString(RobotSharedPreferences.PROGRAM_KEY, mProgram.toString());
     }
 
-    private void setComandButtonClickListener(final EditText edittext, View view, final char c) {
+    private void setComandButtonClickListener(View view, final char c) {
         view.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 mProgram.append(c);
+                EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
                 edittext.setText(mProgram.toString());
             }
         });
     }
 
-    private void setDeleteButtonClickListener(final EditText edittext, View button) {
+    private void setDeleteButtonClickListener(View button) {
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 int l = mProgram.length();
                 if (l > 0) {
                     mProgram.deleteCharAt(mProgram.length() - 1);
                 }
+                EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
                 edittext.setText(mProgram);
             }
         });
