@@ -36,10 +36,10 @@ public class Rect2DRoom implements RoomWithWalls {
     @Override
     public Point[] getWalls() {
         Point[] walls = new Point[] {
-                new Point(-1, -1),
-                new Point(mRoomWidth + 1, -1),
+                new Point(0, 0),
+                new Point(mRoomWidth + 1, 0),
                 new Point(mRoomWidth + 1, mRoomHeight + 1),
-                new Point(-1, mRoomHeight + 1)
+                new Point(0, mRoomHeight + 1)
         };
         return walls;
     }

@@ -1,10 +1,14 @@
 package se.kjellstrand.robot.gui;
 
+import java.util.ArrayList;
+
 import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
 import se.kjellstrand.robot.engine.Room;
+import se.kjellstrand.robot.engine.RoomWithWalls;
+import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +30,18 @@ public class ControlPanelFragment extends Fragment {
     protected static final String TAG = ControlPanelFragment.class.getCanonicalName();
 
     private StringBuilder mProgram = new StringBuilder();
+
+    private RobotResultListener resultListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            resultListener = (RobotResultListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement onButtonPressed");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,18 +129,27 @@ public class ControlPanelFragment extends Fragment {
                 robot.setProgram(mProgram.toString());
 
                 // TODO, config and not HARDCODED.
-                Room room = new Rect2DRoom(5, 5, new Point(1, 2));
+                RoomWithWalls room = new Rect2DRoom(5, 5, new Point(1, 2));
 
                 robot.putInRoom(room);
 
-                // Run the program to the end.
-                RobotLocation res = robot.moveUntilEnd();
+                ArrayList<RobotLocation> robotPath = new ArrayList<RobotLocation>();
+
+                RobotLocation res = null;
+                // Run the program to the end. Save the intermediate locations
+                // for visualising the path.
+                while (robot.hasMoreMoves()) {
+                    res = robot.move();
+                    robotPath.add(res);
+                }
 
                 // Show the resulting state
                 if (res != null) {
                     String resString = getString(R.string.halting_position_of_robot, res.toString());
                     resultTextView.setText(resString);
                 }
+
+                resultListener.result(robotPath.toArray(new RobotLocation[robotPath.size()]), room.getWalls());
             }
         });
     }

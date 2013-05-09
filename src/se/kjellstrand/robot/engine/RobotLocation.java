@@ -8,6 +8,16 @@ public class RobotLocation {
 
     private Point mPosition = new Point();
 
+    public RobotLocation(){
+        
+    }
+    
+    public RobotLocation(RobotLocation robotLocation) {
+        mDirection = robotLocation.getDirection();
+        mPosition.x = robotLocation.getPosition().x;
+        mPosition.y = robotLocation.getPosition().y;
+    }
+
     public Direction getDirection() {
         return mDirection;
     }

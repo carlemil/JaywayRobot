@@ -5,6 +5,21 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/linearlayout02"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="#ee0"
+        android:orientation="vertical" >
+
+        <fragment
+            android:id="@+id/frag_2"
+            android:name="se.kjellstrand.robot.gui.VisualiserFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+    
+    <LinearLayout
         android:id="@+id/linearlayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -15,21 +30,6 @@
         <fragment
             android:id="@+id/frag_1"
             android:name="se.kjellstrand.robot.gui.ControlPanelFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearlayout02"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:background="#eee"
-        android:orientation="vertical" >
-
-        <fragment
-            android:id="@+id/frag_2"
-            android:name="se.kjellstrand.robot.gui.VisualiserFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
     </LinearLayout>

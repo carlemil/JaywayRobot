@@ -74,7 +74,7 @@ public class Robot {
 
             Log.d(TAG, "Robot after moving: " + mRobotLocation.toString());
 
-            return mRobotLocation;
+            return new RobotLocation(mRobotLocation);
         }
         return null;
     }

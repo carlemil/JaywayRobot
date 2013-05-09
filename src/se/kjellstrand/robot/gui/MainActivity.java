@@ -1,7 +1,8 @@
 package se.kjellstrand.robot.gui;
 
-
 import se.kjellstrand.robot.R;
+import se.kjellstrand.robot.engine.RobotLocation;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -9,16 +10,21 @@ import android.support.v4.app.FragmentActivity;
  * The main activity holding the control panel and visualiser fragment.
  * 
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements RobotResultListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_layout);
-        
-        // Display the fragment as the main content.
-        //getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new ControlPanelFragment()).commit();
+    }
+
+    @Override
+    public void result(RobotLocation[] robotPath, Point[] room) {
+        VisualiserFragment visualiserFragment = (VisualiserFragment) getSupportFragmentManager().findFragmentById(
+                R.id.frag_2);
+        visualiserFragment.setRobotPath(robotPath);
+        visualiserFragment.setRoom(room);
     }
 
 }
