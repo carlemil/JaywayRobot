@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Region;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -36,14 +37,10 @@ public class VisualiserFragment extends Fragment {
     }
 
     public void setRobotPath(RobotLocation[] robotPath) {
-        // TODO Auto-generated method stub
 
     }
 
     public void setRoom(Point[] room) {
-        // TODO Auto-generated method stub
-        TextView tv = (TextView) getView().findViewById(R.id.textView1);
-        tv.setText(room.length + "");
 
         RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
 
@@ -51,15 +48,24 @@ public class VisualiserFragment extends Fragment {
         if (room.length >= 3) {
             Path walls = new Path();
             walls.moveTo(room[0].x, room[0].y);
+            int minx = Integer.MAX_VALUE, miny = Integer.MAX_VALUE, maxx = 0, maxy = 0;
             for (Point p : room) {
                 walls.lineTo(p.x, p.y);
-                Log.d(TAG,"point: "+p.x+" - "+p.y);
+                // Store the bounding box of the room, used to scale up the room
+                // and robot path to the screen.
+                minx = Math.min(minx, p.x);
+                miny = Math.min(miny, p.y);
+                maxx = Math.max(maxx, p.x);
+                maxy = Math.max(maxy, p.y);
             }
+            // The last line (or was it the carpet?) that ties the room together. 
             walls.lineTo(room[0].x, room[0].y);
-            rrv.defineViewPort(-1, -1, 6, 6);
+
             // Important to define the viewport before adding walls. Scaling and
             // translating will not be correct if the order is reversed.
-            rrv.setPath(walls);
+            rrv.defineViewPort(minx, miny, maxx, maxy, 1);
+
+            rrv.setWalls(walls);
             rrv.invalidate();
         }
 

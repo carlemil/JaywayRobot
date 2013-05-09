@@ -12,8 +12,8 @@
 
     <se.kjellstrand.robot.gui.RobotRoomView     
         android:id="@+id/robot_room_view"    
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_margin="16dp"
         android:background="#ff0000ff"/>
     
