@@ -5,21 +5,15 @@ Assessment assignment for Jayway
 
 Todo:
 
-use config room size start pos
+cleanup. remove menu stuff ?
 
 ö v n s
-
-inte reseta robot vid play + ny reset button
-
-cleanup. remove menu stuff ?
 
 javadoc.
 
 change program text to unicode arrows
 
-
-visualise path.
+add a smal droid at the end of the path.
 
 tablet layout.
 
-better language handling / settings

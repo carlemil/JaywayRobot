@@ -29,7 +29,7 @@ public class BasicRobotTest extends TestCase {
 
     public void testBasicRobotMoves() {
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(0, 0, startPos);
+        Rect2DRoom room = new Rect2DRoom(0, 0, startPos);
         Robot robot = new Robot();
 
         assertEquals(null, robot.move());
@@ -64,7 +64,7 @@ public class BasicRobotTest extends TestCase {
     public void testRobotMovesCommands1() {
 
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(5, 5, startPos);
+        Rect2DRoom room = new Rect2DRoom(5, 5, startPos);
         Robot robot = new Robot();
         robot.putInRoom(room);
 
@@ -74,7 +74,7 @@ public class BasicRobotTest extends TestCase {
 
     public void testRobotMovesCommands2() {
         Point startPos = new Point(1, 2);
-        Room room = new Rect2DRoom(5, 5, startPos);
+        Rect2DRoom room = new Rect2DRoom(5, 5, startPos);
         Robot robot = new Robot();
         robot.putInRoom(room);
 
@@ -85,7 +85,7 @@ public class BasicRobotTest extends TestCase {
     public void testRobotMovesCommandsRoomBoundingBox1() {
 
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(3, 3, startPos);
+        Rect2DRoom room = new Rect2DRoom(3, 3, startPos);
         Robot robot = new Robot();
         robot.putInRoom(room);
 
@@ -95,7 +95,7 @@ public class BasicRobotTest extends TestCase {
 
     public void testRobotMovesCommandsRoomBoundingBox2() {
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(3, 3, startPos);
+        Rect2DRoom room = new Rect2DRoom(3, 3, startPos);
         Robot robot = new Robot();
         robot.putInRoom(room);
 
@@ -105,7 +105,7 @@ public class BasicRobotTest extends TestCase {
 
     public void testRobotMovesCommandsRoomBoundingBox3() {
         Point startPos = new Point(1, 1);
-        Room room = new Rect2DRoom(6, 8, startPos);
+        Rect2DRoom room = new Rect2DRoom(6, 8, startPos);
         Robot robot = new Robot();
         robot.putInRoom(room);
 
