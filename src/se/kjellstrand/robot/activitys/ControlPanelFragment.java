@@ -7,6 +7,7 @@ import se.kjellstrand.robot.engine.Language;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
+import se.kjellstrand.robot.settings.RobotSharedPreferences;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Point;

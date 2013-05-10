@@ -1,4 +1,4 @@
-package se.kjellstrand.robot.activitys;
+package se.kjellstrand.robot.settings;
 
 import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.Language;
