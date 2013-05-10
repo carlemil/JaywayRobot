@@ -134,14 +134,15 @@ public class RobotRoomView extends View {
     @Override
     public void draw(android.graphics.Canvas canvas) {
 
-        canvas.drawColor(Color.LTGRAY);
-
-        if (mRobotPath != null && !mRobotPath.isEmpty()) {
-            canvas.drawPath(mRobotPath, mRobotPathPaint);
+        if (mWalls != null && !mWalls.isEmpty()) {
+            canvas.drawPath(mWalls, mRoomFloorPaint);
         }
-
         if (mWalls != null && !mWalls.isEmpty()) {
             canvas.drawPath(mWalls, mRoomWallPaint);
+        }
+        
+        if (mRobotPath != null && !mRobotPath.isEmpty()) {
+            canvas.drawPath(mRobotPath, mRobotPathPaint);
         }
     }
 
