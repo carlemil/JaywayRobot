@@ -7,7 +7,7 @@ Todo:
 
 reload path in onResume()
 
-horizontal center robot view.
+refactor ControlPanelFragment to have a mRobot, and remove duplication of the robots data.
 
 --- nice to have do ---
 

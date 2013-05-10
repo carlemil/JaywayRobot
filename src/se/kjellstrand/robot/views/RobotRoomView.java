@@ -128,6 +128,8 @@ public class RobotRoomView extends View {
         // Move the walls onto 1, 1
         mMatrix.setTranslate(-minX + roomPadding, -minY + roomPadding);
         mMatrix.postScale(scale, scale);
+        int horisontalOffset = (getWidth() / 2) - (int) ((roomWidth * scale) / 2);
+        mMatrix.postTranslate(horisontalOffset, 0);
 
     }
 
@@ -140,7 +142,7 @@ public class RobotRoomView extends View {
         if (mWalls != null && !mWalls.isEmpty()) {
             canvas.drawPath(mWalls, mRoomWallPaint);
         }
-        
+
         if (mRobotPath != null && !mRobotPath.isEmpty()) {
             canvas.drawPath(mRobotPath, mRobotPathPaint);
         }
@@ -157,10 +159,10 @@ public class RobotRoomView extends View {
         mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mRobotPathPaint.setStrokeWidth(mRobotPathStrokeWidth);
 
-//         PathEffect pathEffect = new DashPathEffect(new float[] {
-//         1, 2
-//         }, 0);
-//         mRobotPathPaint.setPathEffect(pathEffect);
+        // PathEffect pathEffect = new DashPathEffect(new float[] {
+        // 1, 2
+        // }, 0);
+        // mRobotPathPaint.setPathEffect(pathEffect);
 
         if (mMatrix != null && robotPath != null) {
             robotPath.transform(mMatrix);
