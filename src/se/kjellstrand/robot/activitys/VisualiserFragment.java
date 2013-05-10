@@ -34,10 +34,12 @@ public class VisualiserFragment extends Fragment {
     }
 
     /**
-     * Updates the drawing of the room and the path used by the robot to move through the room.
+     * Updates the drawing of the room and the path used by the robot to move
+     * through the room.
      * 
-     * @param robotPathPoints a array for points, showing where the robot moved. 
-     * @param roomWallPoints a array of points, making up a polygon of the walls of the room.
+     * @param robotPathPoints a array for points, showing where the robot moved.
+     * @param roomWallPoints a array of points, making up a polygon of the walls
+     *        of the room.
      */
     public void updateRobotAndRoom(Point[] robotPathPoints, Point[] roomWallPoints) {
         RobotRoomView robotRoomView = (RobotRoomView) getView().findViewById(R.id.robot_room_view);

@@ -120,7 +120,7 @@ public class RobotRoomView extends View {
 
         float scale = 1 / Math.max(xScale, yScale);
 
-        mRobotPathStrokeWidth = (int) (scale * 0.5);
+        mRobotPathStrokeWidth = (int) (scale * 0.4);
         mRoomWallsStrokeWidth = (int) (scale);
 
         mMatrix = new Matrix();
@@ -156,10 +156,10 @@ public class RobotRoomView extends View {
         mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mRobotPathPaint.setStrokeWidth(mRobotPathStrokeWidth);
 
-        // PathEffect pathEffect = new DashPathEffect(new float[] {
-        // 10, 10
-        // }, 3);
-        // mRobotPathPaint.setPathEffect(pathEffect);
+//         PathEffect pathEffect = new DashPathEffect(new float[] {
+//         1, 2
+//         }, 0);
+//         mRobotPathPaint.setPathEffect(pathEffect);
 
         if (mMatrix != null && robotPath != null) {
             robotPath.transform(mMatrix);

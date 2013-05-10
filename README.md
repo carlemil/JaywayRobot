@@ -5,9 +5,6 @@ Assessment assignment for Jayway
 
 Todo:
 
-
-ö v n s
-
 reload path in onResume()
 
 implement reset menu, or remove

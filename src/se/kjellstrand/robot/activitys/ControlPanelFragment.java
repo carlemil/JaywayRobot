@@ -173,7 +173,6 @@ public class ControlPanelFragment extends Fragment {
             public void onClick(View view) {
                 runRobotAndUpdateVisualisation();
             }
-
         });
     }
 
