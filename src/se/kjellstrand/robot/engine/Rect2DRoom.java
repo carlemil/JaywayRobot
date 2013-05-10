@@ -18,9 +18,19 @@ public class Rect2DRoom implements Room {
      */
     private static final String TAG = Rect2DRoom.class.getCanonicalName();
 
+    /**
+     * The width of the room.
+     */
     private int mRoomWidth = 0;
+    
+    /**
+     * The length of the room.
+     */
     private int mRoomLength = 0;
 
+    /**
+     * The position that the robot will be insert into the room at.
+     */
     private Point mStartPosition = new Point();
 
     /**
