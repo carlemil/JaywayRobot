@@ -31,7 +31,7 @@ public class ControlPanelFragment extends Fragment {
 
     private StringBuilder mProgram = new StringBuilder();
 
-    private RobotResultListener mResultListener;
+    private RobotRunResultListener mResultListener;
 
     /**
      * Default language is English.
@@ -57,7 +57,7 @@ public class ControlPanelFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mResultListener = (RobotResultListener) getActivity();
+            mResultListener = (RobotRunResultListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement onButtonPressed");
         }
@@ -207,7 +207,7 @@ public class ControlPanelFragment extends Fragment {
             resultTextView.setText(resString);
         }
 
-        mResultListener.result(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom().getWalls());
+        mResultListener.robotRunResultRecived(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom().getWalls());
     }
 
     private void showCurrentProgram() {

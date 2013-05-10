@@ -1,6 +1,7 @@
 package se.kjellstrand.robot.activitys;
 
 import se.kjellstrand.robot.R;
+import se.kjellstrand.robot.settings.SettingsActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
@@ -13,7 +14,7 @@ import android.view.MenuItem;
  * The main activity holding the control panel and visualiser fragment.
  * 
  */
-public class MainActivity extends Activity implements RobotResultListener {
+public class MainRobotActivity extends Activity implements RobotRunResultListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends Activity implements RobotResultListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent intent = new Intent(MainRobotActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 break;
 
@@ -45,7 +46,7 @@ public class MainActivity extends Activity implements RobotResultListener {
     }
 
     @Override
-    public void result(Point[] robotPath, Point[] room) {
+    public void robotRunResultRecived(Point[] robotPath, Point[] room) {
         VisualiserFragment visualiserFragment = (VisualiserFragment) getFragmentManager().findFragmentById(
                 R.id.visualiser_fragment);
         visualiserFragment.setRobotAndRoom(robotPath, room);
