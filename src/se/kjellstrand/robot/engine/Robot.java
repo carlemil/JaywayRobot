@@ -54,6 +54,11 @@ public class Robot {
     private final char RIGHT;
 
     /**
+     * The language understood by this robot.
+     */
+    private Language mLanguage;
+
+    /**
      * Default constructor. Sets the programming language to English.
      */
     public Robot() {
@@ -68,6 +73,7 @@ public class Robot {
      */
     public Robot(Language language) {
         Log.d(TAG, "Robot started, language: " + language.toString());
+        mLanguage = language;
         FORWARD = Language.getForwardChar(language);
         LEFT = Language.getLeftChar(language);
         RIGHT = Language.getRightChar(language);
@@ -124,7 +130,7 @@ public class Robot {
                 moveForward(mRobotLocation);
             }
 
-            Log.d(TAG, "Robot after moving: " + mRobotLocation.toString());
+            Log.d(TAG, "Robot after moving: " + mRobotLocation.toString(mLanguage));
 
             return new RobotLocation(mRobotLocation);
         }
