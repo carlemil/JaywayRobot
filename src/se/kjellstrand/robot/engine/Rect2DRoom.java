@@ -20,11 +20,18 @@ public class Rect2DRoom implements Room {
 
     private Point mStartPosition = new Point();
 
-    public Rect2DRoom(int width, int height, Point pos) {
+    /**
+     * Constructor, initialises a room.
+     * 
+     * @param width the width of the new room.
+     * @param length the length of the new room.
+     * @param pos the position the robot will be inserted into the room at.
+     */
+    public Rect2DRoom(int width, int length, Point pos) {
         this.mRoomWidth = width;
-        this.mRoomLength = height;
+        this.mRoomLength = length;
         this.mStartPosition = pos;
-        Log.d(TAG, "New room: " + width + " x " + height + " startPos: " + pos);
+        Log.d(TAG, "New room, size: " + width + " x " + length + " startPos: " + pos);
     }
 
     @Override
