@@ -5,18 +5,26 @@ Assessment assignment for Jayway
 
 Todo:
 
-cleanup. remove menu stuff ?
-
-ö v n s
 
 javadoc.
 
-change program text to unicode arrows
+cleanup. 
 
-add a smal droid at the end of the path.
+remove menu stuff ?
+
+ö v n s
+
+--- nice to have do ---
 
 tablet layout.
 
-Custom settings menu for width,height and start position. Only allowing
+new language: arrows
+
+add a small 'droid' at the end of the path.
+
+--- extras ---
+
+Custom settings menu for width, height and start position. Only allowing
 start position to be within the room, and possibly limiting the size of
 the room as-well. 
+Use the number picker to make it easier to select width/length and x/y.
