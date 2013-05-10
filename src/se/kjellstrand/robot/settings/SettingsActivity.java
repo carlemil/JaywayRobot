@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Opens up the settings fragment.
+ * Shows the settings fragment.
  */
 public class SettingsActivity extends Activity {
 
