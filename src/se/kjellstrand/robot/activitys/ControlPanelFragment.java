@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -155,8 +154,8 @@ public class ControlPanelFragment extends Fragment {
                 if (l > 0) {
                     mProgram.deleteCharAt(mProgram.length() - 1);
                 }
-                EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
-                edittext.setText(mProgram);
+                TextView textView = (TextView) getView().findViewById(R.id.text_view_program);
+                textView.setText(mProgram);
             }
         });
     }
@@ -218,8 +217,8 @@ public class ControlPanelFragment extends Fragment {
     }
 
     private void showCurrentProgram() {
-        EditText edittext = (EditText) getView().findViewById(R.id.edit_text_program);
-        edittext.setText(mProgram.toString());
+        TextView textView = (TextView) getView().findViewById(R.id.text_view_program);
+        textView.setText(mProgram.toString());
     }
 
 }

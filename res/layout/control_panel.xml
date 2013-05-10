@@ -9,15 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainRobotActivity" >
 
-    <EditText
-        android:id="@+id/edit_text_program"
+    <TextView
+        android:id="@+id/text_view_program"
         style="@style/TextBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false" >
-    </EditText>
+        android:ellipsize="start"
+        android:singleLine="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,12 +49,6 @@
             android:layout_margin="4dp"
             android:minWidth="@dimen/command_button_width"
             android:text="@string/right_arrow" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
 
         <Button
             android:id="@+id/button_delete"
@@ -65,7 +58,7 @@
             android:layout_margin="4dp"
             android:minWidth="@dimen/command_button_width"
             android:text="@string/delete" />
-
+    
         <Button
             android:id="@+id/button_play"
             style="@style/CommandButton"

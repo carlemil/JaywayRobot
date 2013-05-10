@@ -6,17 +6,14 @@ Assessment assignment for Jayway
 Todo:
 
 
-javadoc.
-
-cleanup.
+ö v n s
 
 layout, result text goes missing under screen if edit text is 2 lines, force single and elipz... ?
 
-implement reset menu
+implement reset menu, or remove
 
 remove gray background from unused visualiser space.
 
-ö v n s
 
 --- nice to have do ---
 
