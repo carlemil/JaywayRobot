@@ -38,6 +38,12 @@ public class MainRobotActivity extends Activity implements RobotRunResultListene
                 Intent intent = new Intent(MainRobotActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 break;
+                
+            case R.id.action_clear_program:
+                ControlPanelFragment controlPanelFragment = (ControlPanelFragment) getFragmentManager().findFragmentById(
+                        R.id.control_panel_fragment);
+                controlPanelFragment.resetRobotProgram();
+                break;
 
             default:
                 break;

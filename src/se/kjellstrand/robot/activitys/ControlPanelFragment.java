@@ -135,6 +135,13 @@ public class ControlPanelFragment extends Fragment {
             RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
         }
     }
+    
+    public void resetRobotProgram(){
+        mProgram = new StringBuilder();
+        RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
+        showCurrentProgram();
+        runRobotAndUpdateVisualisation();
+    }
 
     private void setComandButtonClickListener(View view, final char c) {
         view.setOnClickListener(new OnClickListener() {

@@ -7,10 +7,7 @@ Todo:
 
 reload path in onResume()
 
-implement reset menu, or remove
-
-remove gray background from unused visualiser space.
-
+reset start pos when empty run with program.
 
 --- nice to have do ---
 
