@@ -9,6 +9,8 @@ reload path in onResume()
 
 reset start pos when empty run with program.
 
+horizontal center robot view.
+
 --- nice to have do ---
 
 tablet layout.
