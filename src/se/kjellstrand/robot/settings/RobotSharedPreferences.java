@@ -75,6 +75,8 @@ public class RobotSharedPreferences {
         String lang = getPrefs(context).getString(languagePrefKey, null);
         if (lang != null && lang.equals(context.getString(R.string.swedish))) {
             return Language.SWEDISH;
+        } else if (lang != null && lang.equals(context.getString(R.string.arrows))) {
+            return Language.ARROWS;
         } else {
             return Language.ENGLISH;
         }

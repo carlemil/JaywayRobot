@@ -104,6 +104,8 @@ public class ControlPanelFragment extends Fragment {
         View view = getView();
 
         Language language = RobotSharedPreferences.getLanguage(getActivity());
+        Log.d("TAG", "lang: "+mLanguage.toString());
+        Log.d("TAG", "lang: "+language.toString());
         if (language != mLanguage) {
             Log.d(TAG, "New language set: " + language);
             setLanguage(language);

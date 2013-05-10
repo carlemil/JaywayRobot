@@ -21,21 +21,23 @@
     <string name="pref_languages_key">pref_languages_key</string>
     <string name="english">English</string>
     <string name="swedish">Swedish</string>
+	<string name="arrows">Arrows</string>
 
     <string-array name="list_of_languages">
         <item>@string/english</item>
         <item>@string/swedish</item>
+        <item>@string/arrows</item>
     </string-array>
 
     <!-- Settings for a room -->
     <string name="pref_room_width_title">Room width</string>
     <string name="pref_room_width_message">How wide should the room be?</string>
-    <string name="pref_room_width_summary">Current room width %s</string>
+    <string name="pref_room_width_summary">Current room width: %s</string>
     <string name="pref_room_width_key">pref_room_width_key</string>
     <string name="pref_room_width_dialog_title">Width!</string>
     <string name="pref_room_length_title">Room length</string>
     <string name="pref_room_length_message">How long should the room be?</string>
-    <string name="pref_room_length_summary">Current room length %s</string>
+    <string name="pref_room_length_summary">Current room length: %s</string>
     <string name="pref_room_length_key">pref_room_length_key</string>
     <string name="pref_room_length_dialog_title">Length!</string>
 

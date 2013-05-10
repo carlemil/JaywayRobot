@@ -5,7 +5,7 @@ package se.kjellstrand.robot.engine;
  * 
  */
 public enum Language {
-    SWEDISH, ENGLISH;
+    SWEDISH, ENGLISH, ARROWS;
 
     /**
      * Returns the char used to display "Forward" in the selected language.
@@ -18,6 +18,8 @@ public enum Language {
         switch (language) {
             case SWEDISH:
                 return 'G';
+            case ARROWS:
+                return '\u2191';
             default:
                 return 'F';
         }
@@ -32,6 +34,8 @@ public enum Language {
         switch (language) {
             case SWEDISH:
                 return 'V';
+            case ARROWS:
+                return '\u21b6';
             default:
                 return 'L';
         }
@@ -46,6 +50,8 @@ public enum Language {
         switch (language) {
             case SWEDISH:
                 return 'H';
+            case ARROWS:
+                return '\u21b7';
             default:
                 return 'R';
         }
