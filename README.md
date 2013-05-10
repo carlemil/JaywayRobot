@@ -5,19 +5,21 @@ Assessment assignment for Jayway
 
 Todo:
 
-reload path in onResume()
+--- known bug ---
+
+reload visualiser in controlpanel.onResume()
+
+--- todo ---
 
 refactor ControlPanelFragment to have a mRobot, and remove duplication of the robots data.
 
---- nice to have do ---
+--- nice to have ---
+
+add a small 'droid' at the end of the path.
 
 tablet layout.
 
 quad/splines for the paths.
-
-new language: arrows
-
-add a small 'droid' at the end of the path.
 
 --- extras ---
 
