@@ -19,25 +19,46 @@ public class RobotSharedPreferences {
     public static final String PROGRAM_KEY = "program";
 
     /**
-     * Key used by SharedPreferences as well as by the savedInstanceState of
-     * fragments/activities to store the language of the current robot.
+     * Reference to the SharedPreferences used by this application.
      */
-    public static final String LANGUAGE_KEY = "language";
-
     private static SharedPreferences mPrefs;
 
+    /**
+     * Return the width of the last configured room.
+     * 
+     * @param context used for locking up resources.
+     * @return the width of the last configured room.
+     */
     public static int getRoomWidth(Context context) {
         return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_width_key), "5"));
     }
 
+    /**
+     * Return the length of the last configured room.
+     * 
+     * @param context used for locking up resources.
+     * @return the length of the last configured room.
+     */
     public static int getRoomLength(Context context) {
         return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_length_key), "5"));
     }
 
+    /**
+     * Return the x coordinate of the start position of the last configured room.
+     * 
+     * @param context used for locking up resources.
+     * @return the x coordinate of the start position of the last configured room.
+     */
     public static int getRobotStartX(Context context) {
         return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_X_key), "1"));
     }
 
+    /**
+     * Return the y coordinate of the start position of the last configured room.
+     * 
+     * @param context used for locking up resources.
+     * @return the y coordinate of the start position of the last configured room.
+     */
     public static int getRobotStartY(Context context) {
         return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_Y_key), "1"));
     }
@@ -59,13 +80,6 @@ public class RobotSharedPreferences {
         }
     }
 
-    private static SharedPreferences getPrefs(Context context) {
-        if (mPrefs == null) {
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        }
-        return mPrefs;
-    }
-
     /**
      * Fetch a stored program.
      * 
@@ -78,17 +92,6 @@ public class RobotSharedPreferences {
     }
 
     /**
-     * 
-     * @param context of the activity
-     * @param language the language.
-     */
-    public static void putLanguage(Context context, Language language) {
-        SharedPreferences.Editor editor = getPrefs(context).edit();
-        editor.putInt(LANGUAGE_KEY, language.ordinal());
-        editor.commit();
-    }
-
-    /**
      * Store a program.
      * 
      * @param context of the activity
@@ -98,6 +101,13 @@ public class RobotSharedPreferences {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putString(PROGRAM_KEY, program);
         editor.commit();
+    }
+
+    private static SharedPreferences getPrefs(Context context) {
+        if (mPrefs == null) {
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        }
+        return mPrefs;
     }
 
 }
