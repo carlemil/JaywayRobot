@@ -1,6 +1,7 @@
-package se.kjellstrand.robot.gui;
+package se.kjellstrand.robot.activitys;
 
 import se.kjellstrand.robot.R;
+import se.kjellstrand.robot.views.RobotRoomView;
 import android.app.Fragment;
 import android.graphics.Path;
 import android.graphics.Point;

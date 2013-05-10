@@ -1,4 +1,4 @@
-package se.kjellstrand.robot.gui;
+package se.kjellstrand.robot.views;
 
 import android.content.Context;
 import android.graphics.Color;

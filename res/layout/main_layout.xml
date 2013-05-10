@@ -12,7 +12,7 @@
 
         <fragment
             android:id="@+id/visualiser_fragment"
-            android:name="se.kjellstrand.robot.gui.VisualiserFragment"
+            android:name="se.kjellstrand.robot.activitys.VisualiserFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
     </LinearLayout>
@@ -25,7 +25,7 @@
 
         <fragment
             android:id="@+id/control_panel_fragment"
-            android:name="se.kjellstrand.robot.gui.ControlPanelFragment"
+            android:name="se.kjellstrand.robot.activitys.ControlPanelFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
     </LinearLayout>

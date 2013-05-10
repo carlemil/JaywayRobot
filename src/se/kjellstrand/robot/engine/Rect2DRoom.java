@@ -4,8 +4,12 @@ import android.graphics.Point;
 import android.util.Log;
 
 /**
- * A rectangular room with walls bounding the room.
- * 
+ * A rectangular room with walls bounding the room. A Rect2DRoom room starts at
+ * the 1,1 coordinate and extends out on the positive end of the x and y axis. A
+ * call to Rect2DRoom(5, 5, new Point(1,1)) would create a room with the
+ * interior coordinates 1,1,5,5 and the getWalls() call would return (0,0,6,6)
+ * for the same room. It is ok to set the start position outside the room, this
+ * will lead to the robot getting stuck and unable to move.
  */
 public class Rect2DRoom implements Room {
 
@@ -15,14 +19,6 @@ public class Rect2DRoom implements Room {
     private int mRoomLength = 0;
 
     private Point mStartPosition = new Point();
-
-    public int getRoomWidth() {
-        return mRoomWidth;
-    }
-
-    public int getRoomLength() {
-        return mRoomLength;
-    }
 
     public Rect2DRoom(int width, int height, Point pos) {
         this.mRoomWidth = width;
@@ -44,6 +40,31 @@ public class Rect2DRoom implements Room {
         return p;
     }
 
+    /**
+     * Get the width of the room.
+     * 
+     * @return the width of the room.
+     */
+    public int getRoomWidth() {
+        return mRoomWidth;
+    }
+
+    /**
+     * Get the length of the room.
+     * 
+     * @return the length of the room.
+     */
+    public int getRoomLength() {
+        return mRoomLength;
+    }
+
+    /**
+     * Get the walls of the room.
+     * 
+     * @return a list of points defining the walls of the room. The list is a
+     *         open polygon where the first and last points makes up the final
+     *         wall.
+     */
     public Point[] getWalls() {
         Point[] walls = new Point[] {
                 new Point(0, 0),

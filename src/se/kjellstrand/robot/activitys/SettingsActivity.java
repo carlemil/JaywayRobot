@@ -1,4 +1,4 @@
-package se.kjellstrand.robot.gui;
+package se.kjellstrand.robot.activitys;
 
 import android.app.Activity;
 import android.os.Bundle;
