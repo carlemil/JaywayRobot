@@ -7,7 +7,7 @@ Todo:
 
 reload path in onResume()
 
-reset start pos when empty run with program.
+reset halt pos when empty run with program.
 
 horizontal center robot view.
 

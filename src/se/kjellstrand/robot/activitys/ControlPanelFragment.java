@@ -184,6 +184,9 @@ public class ControlPanelFragment extends Fragment {
     }
 
     private void runRobotAndUpdateVisualisation() {
+        // Set the resulting state to unknown until the run completes.
+        setResultString(getString(R.string.unknown_position));
+        
         Robot robot = new Robot(mLanguage);
 
         // Read room data from shared prefs.
@@ -212,14 +215,18 @@ public class ControlPanelFragment extends Fragment {
 
         // Show the resulting state
         if (res != null) {
-            String resString = getString(R.string.halting_position_of_robot, res.toString(mLanguage));
-            final TextView resultTextView = (TextView) getView().findViewById(R.id.robot_run_result);
-            resultTextView.setText(resString);
+            setResultString(res.toString(mLanguage));
         }
 
         // Let the result listener know that there is new data to display.
         mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom()
                 .getWalls());
+    }
+    
+    private void setResultString(String result){
+        final TextView resultTextView = (TextView) getView().findViewById(R.id.robot_run_result);
+        String resString = getString(R.string.halting_position_of_robot, result);
+        resultTextView.setText(resString);
     }
 
     private void showCurrentProgram() {
