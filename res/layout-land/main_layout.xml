@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_relative_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <fragment
+        android:id="@+id/visualiser_fragment"
+        android:name="se.kjellstrand.robot.activitys.VisualiserFragment"
+        android:layout_width="300dp"
+        android:layout_height="fill_parent" />
+
+    <fragment
+        android:id="@+id/control_panel_fragment"
+        android:name="se.kjellstrand.robot.activitys.ControlPanelFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>
