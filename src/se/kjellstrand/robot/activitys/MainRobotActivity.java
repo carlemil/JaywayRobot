@@ -46,7 +46,7 @@ public class MainRobotActivity extends Activity implements RobotRunResultListene
     }
 
     @Override
-    public void robotRunResultRecived(Point[] robotPath, Point[] room) {
+    public void robotRunResultReceived(Point[] robotPath, Point[] room) {
         VisualiserFragment visualiserFragment = (VisualiserFragment) getFragmentManager().findFragmentById(
                 R.id.visualiser_fragment);
         visualiserFragment.setRobotAndRoom(robotPath, room);

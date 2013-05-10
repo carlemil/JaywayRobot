@@ -13,6 +13,9 @@ import android.util.Log;
  */
 public class Rect2DRoom implements Room {
 
+    /**
+     * Tag used to enable easy filtering in logcat.
+     */
     private static final String TAG = Rect2DRoom.class.getCanonicalName();
 
     private int mRoomWidth = 0;

@@ -11,6 +11,9 @@ import android.view.View;
 
 public class RobotRoomView extends View {
 
+    /**
+     * Tag used to enable easy filtering in logcat.
+     */
     private String TAG = RobotRoomView.class.getCanonicalName();
 
     private Paint mRoomPaint = new Paint();

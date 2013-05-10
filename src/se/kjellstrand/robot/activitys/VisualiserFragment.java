@@ -18,6 +18,9 @@ import android.view.ViewGroup;
  */
 public class VisualiserFragment extends Fragment {
 
+    /**
+     * Tag used to enable easy filtering in logcat.
+     */
     protected static final String TAG = VisualiserFragment.class.getCanonicalName();
 
     @Override

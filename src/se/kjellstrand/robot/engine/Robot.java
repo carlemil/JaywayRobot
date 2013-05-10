@@ -4,6 +4,9 @@ import android.util.Log;
 
 public class Robot {
 
+    /**
+     * Tag used to enable easy filtering in logcat.
+     */
     private static final String TAG = Robot.class.getCanonicalName();
 
     private Rect2DRoom mRoom;

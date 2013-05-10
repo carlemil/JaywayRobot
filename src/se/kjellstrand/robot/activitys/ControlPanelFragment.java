@@ -7,7 +7,6 @@ import se.kjellstrand.robot.engine.Language;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
 import se.kjellstrand.robot.engine.RobotLocation;
-import se.kjellstrand.robot.engine.Room;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Point;
@@ -27,10 +26,19 @@ import android.widget.TextView;
  */
 public class ControlPanelFragment extends Fragment {
 
+    /**
+     * Tag used to enable easy filtering in logcat.
+     */
     protected static final String TAG = ControlPanelFragment.class.getCanonicalName();
 
+    /**
+     * A StringBuilder that holds the current program. Used to run the robot.
+     */
     private StringBuilder mProgram = new StringBuilder();
 
+    /**
+     * Class listening for results from our robot.
+     */
     private RobotRunResultListener mResultListener;
 
     /**
@@ -65,11 +73,9 @@ public class ControlPanelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.control_panel, null);
 
         mLanguage = RobotSharedPreferences.getLanguage(getActivity());
-        Log.d(TAG, "Language: " + mLanguage);
         setLanguage(mLanguage);
 
         if (savedInstanceState != null) {
@@ -83,9 +89,6 @@ public class ControlPanelFragment extends Fragment {
                 mProgram.append(program);
             }
         }
-
-        final EditText programEditText = (EditText) view.findViewById(R.id.edit_text_program);
-        programEditText.setText(mProgram);
 
         String resString = getString(R.string.halting_position_of_robot,
                 getActivity().getString(R.string.unknown_position));
@@ -106,17 +109,15 @@ public class ControlPanelFragment extends Fragment {
             setLanguage(language);
             // Reset our program since the language changed.
             mProgram = new StringBuilder();
-            showCurrentProgram();
         }
+        showCurrentProgram();
 
         setComandButtonClickListener(view.findViewById(R.id.button_left), mLeftChar);
         setComandButtonClickListener(view.findViewById(R.id.button_right), mRightChar);
         setComandButtonClickListener(view.findViewById(R.id.button_forward), mForwardChar);
-
         setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
-
         setPlayButtonClickListener(view.findViewById(R.id.button_play));
-        
+
         runRobotAndUpdateVisualisation();
     }
 
@@ -179,17 +180,20 @@ public class ControlPanelFragment extends Fragment {
     private void runRobotAndUpdateVisualisation() {
         Robot robot = new Robot(mLanguage);
 
+        // Read room data from shared prefs.
         int startX = RobotSharedPreferences.getRobotStartX(getActivity());
         int startY = RobotSharedPreferences.getRobotStartY(getActivity());
         int roomWidth = RobotSharedPreferences.getRoomWidth(getActivity());
         int roomLength = RobotSharedPreferences.getRoomLength(getActivity());
 
+        // Create new room
         Rect2DRoom room = new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
-
         robot.putInRoom(room);
         robot.setProgram(mProgram.toString());
 
         ArrayList<Point> robotPath = new ArrayList<Point>();
+        // Add the start position of the robot to the list of positions that the
+        // robot have visited.
         robotPath.add(robot.getRoom().getStartPosition());
 
         RobotLocation res = null;
@@ -207,7 +211,9 @@ public class ControlPanelFragment extends Fragment {
             resultTextView.setText(resString);
         }
 
-        mResultListener.robotRunResultRecived(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom().getWalls());
+        // Let the result listener know that there is new data to display.
+        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom()
+                .getWalls());
     }
 
     private void showCurrentProgram() {

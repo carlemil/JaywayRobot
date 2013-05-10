@@ -8,9 +8,11 @@ Todo:
 
 javadoc.
 
-cleanup. 
+cleanup.
 
-remove menu stuff ?
+layout, result text goes missing under screen if edit text is 2 lines, force single and elipz... ?
+
+implement reset menu
 
 ö v n s
 
