@@ -2,6 +2,10 @@ package se.kjellstrand.robot.engine;
 
 import android.util.Log;
 
+/**
+ * A robot that reads instructions from a "program" and moves according to the instructions.
+ * 
+ */
 public class Robot {
 
     /**
