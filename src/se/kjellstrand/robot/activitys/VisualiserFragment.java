@@ -33,8 +33,14 @@ public class VisualiserFragment extends Fragment {
         return inflater.inflate(R.layout.visualiser, null);
     }
 
-    public void setRobotAndRoom(Point[] robotPathPoints, Point[] roomWallPoints) {
-        RobotRoomView rrv = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
+    /**
+     * Updates the drawing of the room and the path used by the robot to move through the room.
+     * 
+     * @param robotPathPoints a array for points, showing where the robot moved. 
+     * @param roomWallPoints a array of points, making up a polygon of the walls of the room.
+     */
+    public void updateRobotAndRoom(Point[] robotPathPoints, Point[] roomWallPoints) {
+        RobotRoomView robotRoomView = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
 
         int leftWall = Integer.MAX_VALUE, topWall = Integer.MAX_VALUE, rightWall = 0, bottomWall = 0;
 
@@ -55,24 +61,24 @@ public class VisualiserFragment extends Fragment {
 
             // Important to define the viewport before adding walls. Scaling and
             // translating will not be correct if the order is reversed.
-            rrv.defineViewPort(leftWall, topWall, rightWall, bottomWall, 0.5f);
+            robotRoomView.defineViewPort(leftWall, topWall, rightWall, bottomWall, 0.5f);
 
-            rrv.setWalls(walls);
+            robotRoomView.setWalls(walls);
         }
 
+        // Draw the path of the robot
         Path robotPath = new Path();
         robotPath.moveTo(robotPathPoints[0].x,
                 bottomWall - robotPathPoints[0].y);
 
         for (Point p : robotPathPoints) {
-
             // TODO Change to quadTo
             robotPath.lineTo(p.x, bottomWall - p.y);
         }
 
-        rrv.setRobotPath(robotPath);
+        robotRoomView.setRobotPath(robotPath);
 
-        rrv.invalidate();
+        robotRoomView.invalidate();
     }
 
 }

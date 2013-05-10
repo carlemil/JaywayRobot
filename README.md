@@ -14,11 +14,15 @@ layout, result text goes missing under screen if edit text is 2 lines, force sin
 
 implement reset menu
 
+remove gray background from unused visualiser space.
+
 ö v n s
 
 --- nice to have do ---
 
 tablet layout.
+
+quad/splines for the paths.
 
 new language: arrows
 

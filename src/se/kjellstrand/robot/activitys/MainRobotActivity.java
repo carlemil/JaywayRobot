@@ -49,7 +49,7 @@ public class MainRobotActivity extends Activity implements RobotRunResultListene
     public void robotRunResultReceived(Point[] robotPath, Point[] room) {
         VisualiserFragment visualiserFragment = (VisualiserFragment) getFragmentManager().findFragmentById(
                 R.id.visualiser_fragment);
-        visualiserFragment.setRobotAndRoom(robotPath, room);
+        visualiserFragment.updateRobotAndRoom(robotPath, room);
     }
 
 }
