@@ -231,7 +231,7 @@ public class Robot {
                 break;
 
             default:
-                Log.w(TAG, "Unknown Direction set: " + dir.toString());
+                Log.w(TAG, "Unknown Direction: " + dir.toString());
                 break;
         }
     }
@@ -253,7 +253,7 @@ public class Robot {
                 break;
 
             default:
-                Log.w(TAG, "Unknown Direction set: " + dir.toString());
+                Log.w(TAG, "Unknown Direction: " + dir.toString());
                 break;
         }
     }

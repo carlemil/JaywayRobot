@@ -75,8 +75,14 @@ public class RobotLocation {
         this.mPosition = position;
     }
 
-    @Override
-    public String toString() {
-        return mPosition.x + " " + mPosition.y + " " + mDirection.toString().charAt(0);
+    /**
+     * Returns a language specific string for this RobotLocation.
+     * 
+     * @param language the language to create a string for.
+     * 
+     * @return the string.
+     */
+    public String toString(Language language) {
+        return mPosition.x + " " + mPosition.y + " " + Direction.getChar(mDirection, language);
     }
 }

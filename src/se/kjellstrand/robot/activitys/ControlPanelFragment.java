@@ -206,7 +206,7 @@ public class ControlPanelFragment extends Fragment {
 
         // Show the resulting state
         if (res != null) {
-            String resString = getString(R.string.halting_position_of_robot, res.toString());
+            String resString = getString(R.string.halting_position_of_robot, res.toString(mLanguage));
             final TextView resultTextView = (TextView) getView().findViewById(R.id.robot_run_result);
             resultTextView.setText(resString);
         }

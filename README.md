@@ -8,7 +8,7 @@ Todo:
 
 ö v n s
 
-layout, result text goes missing under screen if edit text is 2 lines, force single and elipz... ?
+reload path in onResume()
 
 implement reset menu, or remove
 
