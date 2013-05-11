@@ -46,17 +46,15 @@ public class VisualiserFragment extends Fragment {
         RobotRoomView robotRoomView = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
 
         robotRoomView.setRoom(room);
-        
-        int topWall = room.getBoundingBox().second.y;
 
         // Draw the path of the robot
         Path robotPath = new Path();
-        robotPath.moveTo(robotPathPoints[0].x,
-                topWall - robotPathPoints[0].y);
+        int flipUpsidedownY = room.getBoundingBox().first.y + (room.getBoundingBox().second.y - robotPathPoints[0].y);
+        robotPath.moveTo(robotPathPoints[0].x, flipUpsidedownY);
 
         for (Point p : robotPathPoints) {
-            // TODO Change to quadTo
-            robotPath.lineTo(p.x, topWall - p.y);
+            flipUpsidedownY = room.getBoundingBox().first.y + (room.getBoundingBox().second.y - p.y);
+            robotPath.lineTo(p.x, flipUpsidedownY);
         }
 
         robotRoomView.setRobotPath(robotPath);
