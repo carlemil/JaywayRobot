@@ -113,7 +113,9 @@ public class RobotSharedPreferences {
     public static StringBuilder getProgram(Context context) {
         String program = getPrefs(context).getString(PROGRAM_KEY, null);
         StringBuilder sb = new StringBuilder();
-        sb.append(program);
+        if (program != null) {
+            sb.append(program);
+        }
         return sb;
     }
 
