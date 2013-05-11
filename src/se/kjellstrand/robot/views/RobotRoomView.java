@@ -250,13 +250,13 @@ public class RobotRoomView extends View {
         mRobotBitmap = new Bitmap[4];
         Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
 
-        m.setRotate(180);
-        mRobotBitmap[0] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
-        m.setRotate(90);
-        mRobotBitmap[1] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
         m.setRotate(0);
-        mRobotBitmap[2] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+        mRobotBitmap[0] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
         m.setRotate(270);
+        mRobotBitmap[1] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+        m.setRotate(180);
+        mRobotBitmap[2] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+        m.setRotate(90);
         mRobotBitmap[3] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
     }
 
