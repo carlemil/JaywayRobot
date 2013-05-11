@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,7 +97,13 @@ public class ControlPanelFragment extends Fragment {
         setComandButtonClickListener(view.findViewById(R.id.button_forward), mRobot.mForwardChar);
         setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
 
-        runRobotAndUpdateVisualisation();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+              runRobotAndUpdateVisualisation();
+          }
+        }, 500);
     }
 
     @Override
