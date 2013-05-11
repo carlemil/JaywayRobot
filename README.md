@@ -6,8 +6,6 @@ Assessment assignment for Jayway
 
 --- known bug ---
 
-reload visualiser in controlpanel.onResume()
-
 --- todo ---
 
 --- nice to have ---

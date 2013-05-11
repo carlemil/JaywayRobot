@@ -99,10 +99,10 @@ public class ControlPanelFragment extends Fragment {
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
-          @Override
-          public void run() {
-              runRobotAndUpdateVisualisation();
-          }
+            @Override
+            public void run() {
+                runRobotAndUpdateVisualisation();
+            }
         }, 500);
     }
 
@@ -201,7 +201,7 @@ public class ControlPanelFragment extends Fragment {
         }
 
         // Let the result listener know that there is new data to display.
-        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), 
+        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]),
                 mRobot.getRoom(), mRobot.getRobotPosition());
     }
 
