@@ -11,7 +11,7 @@
     <string name="play">\u25b6</string>
 
     <!-- Status strings -->
-    <string name="halting_position_of_robot">Halting position of Robot: %s</string>
+    <string name="halting_position_of_robot">Robot position: %s</string>
     <string name="unknown_position">unknown</string>
 
     <!-- String related to the charsets used for the digits -->
@@ -21,7 +21,7 @@
     <string name="pref_languages_key">pref_languages_key</string>
     <string name="english">English</string>
     <string name="swedish">Swedish</string>
-	<string name="arrows">Arrows</string>
+    <string name="arrows">Arrows</string>
 
     <string-array name="list_of_languages">
         <item>@string/english</item>
@@ -29,14 +29,27 @@
         <item>@string/arrows</item>
     </string-array>
 
+    <!-- String related to the shape of rooms -->
+    <string name="pref_room_shape_title">Room shape</string>
+    <string name="pref_room_shape_summary">Current room shape %s</string>
+    <string name="pref_room_shape_dialog_title">Select what shape the room should have</string>
+    <string name="pref_room_shape_key">pref_room_shape_key</string>
+    <string name="rectangular">Rectangular</string>
+    <string name="circular">Circular</string>
+
+    <string-array name="list_of_room_shapes">
+        <item>@string/rectangular</item>
+        <item>@string/circular</item>
+    </string-array>
+
     <!-- Settings for a room -->
-    <string name="pref_room_width_title">Room width</string>
-    <string name="pref_room_width_message">How wide should the room be?</string>
-    <string name="pref_room_width_summary">Current room width: %s</string>
+    <string name="pref_room_width_title">Room width/radius</string>
+    <string name="pref_room_width_message">Set the width/radius of the room?</string>
+    <string name="pref_room_width_summary">Current room width/radius: %s</string>
     <string name="pref_room_width_key">pref_room_width_key</string>
     <string name="pref_room_width_dialog_title">Width!</string>
     <string name="pref_room_length_title">Room length</string>
-    <string name="pref_room_length_message">How long should the room be?</string>
+    <string name="pref_room_length_message">Set the length of the room?</string>
     <string name="pref_room_length_summary">Current room length: %s</string>
     <string name="pref_room_length_key">pref_room_length_key</string>
     <string name="pref_room_length_dialog_title">Length!</string>

@@ -70,7 +70,7 @@ public class ControlPanelFragment extends Fragment {
             program = RobotSharedPreferences.getProgram(getActivity());
         }
         mRobot.resetProgram(program);
-        
+
         String resString = getString(R.string.halting_position_of_robot,
                 getActivity().getString(R.string.unknown_position));
         ((TextView) view.findViewById(R.id.robot_run_result)).setText(resString);
@@ -114,12 +114,13 @@ public class ControlPanelFragment extends Fragment {
             RobotSharedPreferences.putProgram(getActivity(), mRobot.getProgram().toString());
         }
     }
-    
+
     /**
-     * Clear the robots program, and clears the program stored in the shared prefs.
+     * Clear the robots program, and clears the program stored in the shared
+     * prefs.
      * 
      */
-    public void resetRobotProgram(){
+    public void resetRobotProgram() {
         mRobot.resetProgram(null);
         RobotSharedPreferences.putProgram(getActivity(), null);
         showCurrentProgram();
@@ -162,7 +163,7 @@ public class ControlPanelFragment extends Fragment {
     private void runRobotAndUpdateVisualisation() {
         // Set the resulting state to unknown until the run completes.
         setResultString(getString(R.string.unknown_position));
-        
+
         // Read room data from shared prefs.
         int startX = RobotSharedPreferences.getRobotStartX(getActivity());
         int startY = RobotSharedPreferences.getRobotStartY(getActivity());
@@ -170,7 +171,16 @@ public class ControlPanelFragment extends Fragment {
         int roomLength = RobotSharedPreferences.getRoomLength(getActivity());
 
         // Create new room
-        BoundingBoxRoom room = new CircularRoom(roomWidth, new Point(startX, startY));//new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
+        BoundingBoxRoom room;
+        switch (RobotSharedPreferences.getRoomShape(getActivity())) {
+            case R.string.circular:
+                room = new CircularRoom(roomWidth, new Point(startX, startY));
+                break;
+
+            default:
+                room = new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
+                break;
+        }
         mRobot.putInRoom(room);
 
         ArrayList<Point> robotPath = new ArrayList<Point>();
@@ -194,8 +204,8 @@ public class ControlPanelFragment extends Fragment {
         // Let the result listener know that there is new data to display.
         mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), mRobot.getRoom());
     }
-    
-    private void setResultString(String result){
+
+    private void setResultString(String result) {
         final TextView resultTextView = (TextView) getView().findViewById(R.id.robot_run_result);
         String resString = getString(R.string.halting_position_of_robot, result);
         resultTextView.setText(resString);

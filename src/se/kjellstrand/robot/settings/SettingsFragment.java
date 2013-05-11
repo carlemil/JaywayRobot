@@ -28,6 +28,8 @@ public class SettingsFragment extends PreferenceFragment {
                 updatePrefMenuAlt(sharedPreferences, key, activity,
                         R.string.pref_languages_key, R.string.pref_languages_summary);
                 updatePrefMenuAlt(sharedPreferences, key, activity,
+                        R.string.pref_room_shape_key, R.string.pref_room_shape_summary);
+                updatePrefMenuAlt(sharedPreferences, key, activity,
                         R.string.pref_room_width_key, R.string.pref_room_width_summary);
                 updatePrefMenuAlt(sharedPreferences, key, activity,
                         R.string.pref_room_length_key, R.string.pref_room_length_summary);
@@ -62,7 +64,11 @@ public class SettingsFragment extends PreferenceFragment {
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
 
-        String key = getActivity().getResources().getString(R.string.pref_room_width_key);
+        String key = getActivity().getResources().getString(R.string.pref_room_shape_key);
+        updatePrefMenuAlt(sharedPreferences, key, getActivity(),
+                R.string.pref_room_shape_key, R.string.pref_room_shape_summary);
+
+        key = getActivity().getResources().getString(R.string.pref_room_width_key);
         updatePrefMenuAlt(sharedPreferences, key, getActivity(),
                 R.string.pref_room_width_key, R.string.pref_room_width_summary);
 

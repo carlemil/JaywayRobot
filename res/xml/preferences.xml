@@ -10,6 +10,15 @@
         android:summary="@string/pref_languages_summary"
         android:title="@string/pref_languages_title" />
 
+    <ListPreference
+        android:defaultValue="@string/rectangular"
+        android:dialogTitle="@string/pref_room_shape_dialog_title"
+        android:entries="@array/list_of_room_shapes"
+        android:entryValues="@array/list_of_room_shapes"
+        android:key="@string/pref_room_shape_key"
+        android:summary="@string/pref_room_shape_summary"
+        android:title="@string/pref_room_shape_title" />
+    
     <EditTextPreference
         android:defaultValue="@string/default_room_width"
         android:dialogMessage="@string/pref_room_width_message"

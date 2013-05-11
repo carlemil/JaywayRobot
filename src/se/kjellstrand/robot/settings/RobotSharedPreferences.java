@@ -44,20 +44,24 @@ public class RobotSharedPreferences {
     }
 
     /**
-     * Return the x coordinate of the start position of the last configured room.
+     * Return the x coordinate of the start position of the last configured
+     * room.
      * 
      * @param context used for locking up resources.
-     * @return the x coordinate of the start position of the last configured room.
+     * @return the x coordinate of the start position of the last configured
+     *         room.
      */
     public static int getRobotStartX(Context context) {
         return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_X_key), "1"));
     }
 
     /**
-     * Return the y coordinate of the start position of the last configured room.
+     * Return the y coordinate of the start position of the last configured
+     * room.
      * 
      * @param context used for locking up resources.
-     * @return the y coordinate of the start position of the last configured room.
+     * @return the y coordinate of the start position of the last configured
+     *         room.
      */
     public static int getRobotStartY(Context context) {
         return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_Y_key), "1"));
@@ -79,6 +83,23 @@ public class RobotSharedPreferences {
             return Language.ARROWS;
         } else {
             return Language.ENGLISH;
+        }
+    }
+
+    /**
+     * Fetch a stored room shape.
+     * 
+     * @param context of the activity
+     * 
+     * @return the shape of the room.
+     */
+    public static int getRoomShape(Context context) {
+        String roomShapePrefKey = context.getString(R.string.pref_room_shape_key);
+        String shape = getPrefs(context).getString(roomShapePrefKey, null);
+        if (shape != null && shape.equals(context.getString(R.string.circular))) {
+            return R.string.circular;
+        } else {
+            return R.string.rectangular;
         }
     }
 
