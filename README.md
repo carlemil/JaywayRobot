@@ -11,6 +11,8 @@ reload visualiser in controlpanel.onResume()
 
 --- todo ---
 
+circular Room
+
 refactor ControlPanelFragment to have a mRobot, and remove duplication of the robots data.
 
 --- nice to have ---
@@ -19,7 +21,7 @@ add a small 'droid' at the end of the path.
 
 tablet layout.
 
-quad/splines for the paths.
+quad/splines for rounder paths.
 
 --- extras ---
 
