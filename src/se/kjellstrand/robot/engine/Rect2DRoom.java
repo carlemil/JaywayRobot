@@ -61,24 +61,6 @@ public class Rect2DRoom implements Room {
     }
 
     /**
-     * Get the width of the room.
-     * 
-     * @return the width of the room.
-     */
-    public int getRoomWidth() {
-        return mRoomWidth;
-    }
-
-    /**
-     * Get the length of the room.
-     * 
-     * @return the length of the room.
-     */
-    public int getRoomLength() {
-        return mRoomLength;
-    }
-
-    /**
      * Get the walls of the room.
      * 
      * @return a list of points defining the walls of the room. The list is a
