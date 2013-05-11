@@ -3,7 +3,6 @@ Jayway Robot
 
 Assessment assignment for Jayway
 
-Todo:
 
 --- known bug ---
 
@@ -13,11 +12,9 @@ reload visualiser in controlpanel.onResume()
 
 --- nice to have ---
 
-tablet layout.
+tablet layout?
 
-quad/splines for rounder paths.
-
---- extras ---
+splines for rounder paths.
 
 Custom settings menu for width, height and start position. Only allowing
 start position to be within the room, and possibly limiting the size of
