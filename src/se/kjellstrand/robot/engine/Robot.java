@@ -18,7 +18,7 @@ public class Robot {
      * The room that the robot is currently located in, or null if the robot is
      * in dev/null/ :)
      */
-    private Rect2DRoom mRoom;
+    private BoundingBoxRoom mRoom;
 
     /**
      * The position that the robot is located at, defined as a RobotLocation,
@@ -151,7 +151,7 @@ public class Robot {
      * 
      * @param room the room to put the robot in.
      */
-    public void putInRoom(Rect2DRoom room) {
+    public void putInRoom(BoundingBoxRoom room) {
         this.mRoom = room;
         this.mRobotLocation.setPosition(room.getStartPosition());
         this.mRobotLocation.setDirection(Direction.NORTH);
@@ -228,7 +228,7 @@ public class Robot {
      * 
      * @return the room the robot is in.
      */
-    public Rect2DRoom getRoom() {
+    public BoundingBoxRoom getRoom() {
         return mRoom;
     }
 

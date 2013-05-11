@@ -16,7 +16,6 @@ done - använd contains för att rita golv tiles. bort med onda walls[]
 
 updatera grafik vid varje ändring av programet
 
-lägg till directon pilare för arrows language
 
 --- nice to have ---
 

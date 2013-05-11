@@ -3,6 +3,8 @@ package se.kjellstrand.robot.activitys;
 import java.util.ArrayList;
 
 import se.kjellstrand.robot.R;
+import se.kjellstrand.robot.engine.BoundingBoxRoom;
+import se.kjellstrand.robot.engine.CircularRoom;
 import se.kjellstrand.robot.engine.Language;
 import se.kjellstrand.robot.engine.Rect2DRoom;
 import se.kjellstrand.robot.engine.Robot;
@@ -168,7 +170,7 @@ public class ControlPanelFragment extends Fragment {
         int roomLength = RobotSharedPreferences.getRoomLength(getActivity());
 
         // Create new room
-        Rect2DRoom room = new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
+        BoundingBoxRoom room = new CircularRoom(roomWidth, new Point(startX, startY));//new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
         mRobot.putInRoom(room);
 
         ArrayList<Point> robotPath = new ArrayList<Point>();
