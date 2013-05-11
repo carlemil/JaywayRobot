@@ -12,13 +12,11 @@ reload visualiser in controlpanel.onResume()
 --- todo ---
 
 circular Room
-använd cointains för att rita golv tiles. bort med onda walls[]
+done - använd contains för att rita golv tiles. bort med onda walls[]
 
-updatera grafik vid varje ändring acv programet
+updatera grafik vid varje ändring av programet
 
 lägg till directon pilare för arrows language
-
-clear menu -> null program after restart
 
 --- nice to have ---
 

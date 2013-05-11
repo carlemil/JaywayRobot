@@ -39,6 +39,17 @@ public enum Direction {
                     case EAST:
                         return 'E';
                 }
+            case ARROWS:
+                switch (direction) {
+                    case NORTH:
+                        return '\u2191';
+                    case WEST:
+                        return '\u2190';
+                    case SOUTH:
+                        return '\u2193';
+                    case EAST:
+                        return '\u2192';
+                }
         }
         return ' ';
     }
