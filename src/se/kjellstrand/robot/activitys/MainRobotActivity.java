@@ -2,6 +2,7 @@ package se.kjellstrand.robot.activitys;
 
 import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.BoundingBoxRoom;
+import se.kjellstrand.robot.engine.RobotLocation;
 import se.kjellstrand.robot.settings.SettingsActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -53,10 +54,10 @@ public class MainRobotActivity extends Activity implements RobotRunResultListene
     }
 
     @Override
-    public void robotRunResultReceived(Point[] robotPath, BoundingBoxRoom room) {
+    public void robotRunResultReceived(Point[] robotPath, BoundingBoxRoom room, RobotLocation location) {
         VisualiserFragment visualiserFragment = (VisualiserFragment) getFragmentManager().findFragmentById(
                 R.id.visualiser_fragment);
-        visualiserFragment.updateRobotAndRoom(robotPath, room);
+        visualiserFragment.updateRobotAndRoom(robotPath, room, location);
     }
 
 }

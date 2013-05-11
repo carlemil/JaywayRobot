@@ -1,13 +1,20 @@
 package se.kjellstrand.robot.views;
 
+import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.BoundingBoxRoom;
+import se.kjellstrand.robot.engine.RobotLocation;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -61,6 +68,16 @@ public class RobotRoomView extends View {
     private Matrix mMatrix;
 
     /**
+     * The location of the robot.
+     */
+    private RobotLocation mLocation;
+
+    /**
+     * Bitmaps used for indicating the location and direction of the robot.
+     */
+    private Bitmap mRobotBitmap[];
+
+    /**
      * Simple constructor to use when creating a view from code.
      * 
      * @param context The Context the view is running in, through which it can
@@ -68,6 +85,7 @@ public class RobotRoomView extends View {
      */
     public RobotRoomView(Context context) {
         super(context);
+        loadRobotDrawable();
     }
 
     /**
@@ -79,6 +97,7 @@ public class RobotRoomView extends View {
      */
     public RobotRoomView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        loadRobotDrawable();
     }
 
     /**
@@ -94,6 +113,7 @@ public class RobotRoomView extends View {
      */
     public RobotRoomView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        loadRobotDrawable();
     }
 
     /**
@@ -132,6 +152,7 @@ public class RobotRoomView extends View {
     public void draw(android.graphics.Canvas canvas) {
         drawRoom(canvas);
         drawRobotPath(canvas);
+        drawRobotLocation(canvas);
     }
 
     /**
@@ -144,11 +165,6 @@ public class RobotRoomView extends View {
         mRobotPathPaint.setStyle(Paint.Style.STROKE);
         mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mRobotPathPaint.setStrokeWidth(mRobotPathStrokeWidth);
-
-        // PathEffect pathEffect = new DashPathEffect(new float[] {
-        // 1, 2
-        // }, 0);
-        // mRobotPathPaint.setPathEffect(pathEffect);
 
         if (mMatrix != null && robotPath != null) {
             robotPath.transform(mMatrix);
@@ -173,9 +189,32 @@ public class RobotRoomView extends View {
                 mRoom.getBoundingBox().second.x, mRoom.getBoundingBox().second.y, 1f);
     }
 
+    /**
+     * Sets the location that should be marked as the location of the robot.
+     * 
+     * @param location the location to mark.
+     */
+    public void setRobotLocation(RobotLocation location) {
+        this.mLocation = location;
+    }
+
     private void drawRobotPath(android.graphics.Canvas canvas) {
         if (mRobotPath != null && !mRobotPath.isEmpty()) {
             canvas.drawPath(mRobotPath, mRobotPathPaint);
+        }
+    }
+
+    private void drawRobotLocation(Canvas canvas) {
+        if (mLocation != null && mRobotBitmap != null) {
+            int direction = mLocation.getDirection().ordinal();
+
+            int x = mLocation.getPosition().x;
+            int y = mRoom.getBoundingBox().first.y + (mRoom.getBoundingBox().second.y - mLocation.getPosition().y);
+            float size = 0.6f;
+            RectF dst = new RectF(x - size, y - size, x + size, y + size);
+            mMatrix.mapRect(dst);
+            Rect src = new Rect(0, 0, mRobotBitmap[direction].getWidth(), mRobotBitmap[direction].getHeight());
+            canvas.drawBitmap(mRobotBitmap[direction], src, dst, null);
         }
     }
 
@@ -205,4 +244,20 @@ public class RobotRoomView extends View {
             }
         }
     }
+
+    private void loadRobotDrawable() {
+        Matrix m = new Matrix();
+        mRobotBitmap = new Bitmap[4];
+        Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+
+        m.setRotate(180);
+        mRobotBitmap[0] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+        m.setRotate(90);
+        mRobotBitmap[1] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+        m.setRotate(0);
+        mRobotBitmap[2] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+        m.setRotate(270);
+        mRobotBitmap[3] = Bitmap.createBitmap(tmp, 0, 0, tmp.getWidth(), tmp.getHeight(), m, true);
+    }
+
 }

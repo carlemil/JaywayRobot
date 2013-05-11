@@ -13,8 +13,6 @@ reload visualiser in controlpanel.onResume()
 
 --- nice to have ---
 
-add a small 'droid' at the end of the path.
-
 tablet layout.
 
 quad/splines for rounder paths.

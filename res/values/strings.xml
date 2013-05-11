@@ -65,7 +65,7 @@
     <string name="pref_start_Y_key">pref_startY_key</string>
     <string name="pref_start_Y_dialog_title">Y!</string>
     <string name="default_room_width">16</string>
-    <string name="default_room_length">16</string>
+    <string name="default_room_length">10</string>
     <string name="default_start_X">1</string>
     <string name="default_start_Y">1</string>
 

@@ -2,6 +2,7 @@ package se.kjellstrand.robot.activitys;
 
 import se.kjellstrand.robot.R;
 import se.kjellstrand.robot.engine.BoundingBoxRoom;
+import se.kjellstrand.robot.engine.RobotLocation;
 import se.kjellstrand.robot.views.RobotRoomView;
 import android.app.Fragment;
 import android.graphics.Path;
@@ -39,10 +40,11 @@ public class VisualiserFragment extends Fragment {
      * through the room.
      * 
      * @param robotPathPoints a array for points, showing where the robot moved.
+     * @param location the location of the robot.
      * @param roomWallPoints a array of points, making up a polygon of the walls
      *        of the room.
      */
-    public void updateRobotAndRoom(Point[] robotPathPoints, BoundingBoxRoom room) {
+    public void updateRobotAndRoom(Point[] robotPathPoints, BoundingBoxRoom room, RobotLocation location) {
         RobotRoomView robotRoomView = (RobotRoomView) getView().findViewById(R.id.robot_room_view);
 
         robotRoomView.setRoom(room);
@@ -59,6 +61,8 @@ public class VisualiserFragment extends Fragment {
 
         robotRoomView.setRobotPath(robotPath);
 
+        robotRoomView.setRobotLocation(location);
+        
         robotRoomView.invalidate();
     }
 
