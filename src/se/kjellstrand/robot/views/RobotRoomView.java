@@ -137,7 +137,7 @@ public class RobotRoomView extends View {
 
         float scale = 1 / Math.max(xScale, yScale);
 
-        mRobotPathStrokeWidth = (int) (scale * 0.6);
+        mRobotPathStrokeWidth = (int) (scale * 0.4);
 
         mMatrix = new Matrix();
 
