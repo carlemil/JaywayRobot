@@ -30,7 +30,8 @@ public class RobotSharedPreferences {
      * @return the width of the last configured room.
      */
     public static int getRoomWidth(Context context) {
-        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_width_key), "5"));
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_width_key),
+                context.getString(R.string.default_room_width)));
     }
 
     /**
@@ -40,7 +41,8 @@ public class RobotSharedPreferences {
      * @return the length of the last configured room.
      */
     public static int getRoomLength(Context context) {
-        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_length_key), "5"));
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_room_length_key),
+                context.getString(R.string.default_room_length)));
     }
 
     /**
@@ -52,7 +54,8 @@ public class RobotSharedPreferences {
      *         room.
      */
     public static int getRobotStartX(Context context) {
-        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_X_key), "1"));
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_X_key),
+                context.getString(R.string.default_start_X)));
     }
 
     /**
@@ -64,7 +67,8 @@ public class RobotSharedPreferences {
      *         room.
      */
     public static int getRobotStartY(Context context) {
-        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_Y_key), "1"));
+        return Integer.parseInt(getPrefs(context).getString(context.getString(R.string.pref_start_Y_key),
+                context.getString(R.string.default_start_Y)));
     }
 
     /**
