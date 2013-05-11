@@ -170,7 +170,6 @@ public class ControlPanelFragment extends Fragment {
         // Create new room
         Rect2DRoom room = new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
         mRobot.putInRoom(room);
-        //mRobot.resetProgram();
 
         ArrayList<Point> robotPath = new ArrayList<Point>();
         // Add the start position of the robot to the list of positions that the
