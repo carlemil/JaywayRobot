@@ -190,8 +190,7 @@ public class ControlPanelFragment extends Fragment {
         }
 
         // Let the result listener know that there is new data to display.
-        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), mRobot.getRoom()
-                .getWalls());
+        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), mRobot.getRoom());
     }
     
     private void setResultString(String result){

@@ -2,6 +2,7 @@ package se.kjellstrand.robot.engine;
 
 import android.graphics.Point;
 import android.util.Log;
+import android.util.Pair;
 
 /**
  * A rectangular room with walls bounding the room. A Rect2DRoom room starts at
@@ -11,7 +12,7 @@ import android.util.Log;
  * for the same room. It is ok to set the start position outside the room, this
  * will lead to the robot getting stuck and unable to move.
  */
-public class Rect2DRoom implements Room {
+public class Rect2DRoom implements BoundingBoxRoom {
 
     /**
      * Tag used to enable easy filtering in logcat.
@@ -22,7 +23,7 @@ public class Rect2DRoom implements Room {
      * The width of the room.
      */
     private int mRoomWidth = 0;
-    
+
     /**
      * The length of the room.
      */
@@ -60,21 +61,11 @@ public class Rect2DRoom implements Room {
         return p;
     }
 
-    /**
-     * Get the walls of the room.
-     * 
-     * @return a list of points defining the walls of the room. The list is a
-     *         open polygon where the first and last points makes up the final
-     *         wall.
-     */
-    public Point[] getWalls() {
-        Point[] walls = new Point[] {
-                new Point(0, 0),
-                new Point(mRoomWidth + 1, 0),
-                new Point(mRoomWidth + 1, mRoomLength + 1),
-                new Point(0, mRoomLength + 1)
-        };
-        return walls;
+    @Override
+    public Pair<Point, Point> getBoundingBox() {
+        Point bottomLeft = new Point(0, 0);
+        Point upperRight = new Point(mRoomWidth + 1, mRoomLength + 1);
+        return new Pair<Point, Point>(bottomLeft, upperRight);
     }
 
 }

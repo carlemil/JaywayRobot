@@ -1,5 +1,6 @@
 package se.kjellstrand.robot.activitys;
 
+import se.kjellstrand.robot.engine.BoundingBoxRoom;
 import android.graphics.Point;
 
 /**
@@ -7,5 +8,5 @@ import android.graphics.Point;
  * 
  */
 public interface RobotRunResultListener {
-    public void robotRunResultReceived(Point[] points, Point[] room);
+    public void robotRunResultReceived(Point[] points, BoundingBoxRoom room);
 }

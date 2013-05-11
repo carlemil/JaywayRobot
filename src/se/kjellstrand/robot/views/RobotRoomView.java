@@ -1,12 +1,14 @@
 package se.kjellstrand.robot.views;
 
+import se.kjellstrand.robot.engine.BoundingBoxRoom;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -42,14 +44,9 @@ public class RobotRoomView extends View {
     private int mRobotPathStrokeWidth;
 
     /**
-     * Width of the walls.
+     * Room that the robot is located in. Used for drawing walls/floor.
      */
-    private int mRoomWallsStrokeWidth;
-
-    /**
-     * A path containing the points that makes up the walls of the room.
-     */
-    private Path mWalls;
+    private BoundingBoxRoom mRoom;
 
     /**
      * A path containing the points that the robot moved over while running its
@@ -111,7 +108,7 @@ public class RobotRoomView extends View {
      * @param roomPadding padding to use around the rooms walls to give some
      *        space to the view.
      */
-    public void defineViewPort(int minX, int minY, int maxX, int maxY, float roomPadding) {
+    private void defineViewPort(int minX, int minY, int maxX, int maxY, float roomPadding) {
         float roomWidth = (roomPadding * 2) + maxX - minX;
         float roomHeight = (roomPadding * 2) + maxY - minY;
 
@@ -120,8 +117,7 @@ public class RobotRoomView extends View {
 
         float scale = 1 / Math.max(xScale, yScale);
 
-        mRobotPathStrokeWidth = (int) (scale * 0.4);
-        mRoomWallsStrokeWidth = (int) (scale);
+        mRobotPathStrokeWidth = (int) (scale * 0.6);
 
         mMatrix = new Matrix();
 
@@ -130,22 +126,12 @@ public class RobotRoomView extends View {
         mMatrix.postScale(scale, scale);
         int horisontalOffset = (getWidth() / 2) - (int) ((roomWidth * scale) / 2);
         mMatrix.postTranslate(horisontalOffset, 0);
-
     }
 
     @Override
     public void draw(android.graphics.Canvas canvas) {
-
-        if (mWalls != null && !mWalls.isEmpty()) {
-            canvas.drawPath(mWalls, mRoomFloorPaint);
-        }
-        if (mWalls != null && !mWalls.isEmpty()) {
-            canvas.drawPath(mWalls, mRoomWallPaint);
-        }
-
-        if (mRobotPath != null && !mRobotPath.isEmpty()) {
-            canvas.drawPath(mRobotPath, mRobotPathPaint);
-        }
+        drawRoom(canvas);
+        drawRobotPath(canvas);
     }
 
     /**
@@ -154,7 +140,7 @@ public class RobotRoomView extends View {
      * @param robotPath the robots path.
      */
     public void setRobotPath(Path robotPath) {
-        mRobotPathPaint.setColor(Color.DKGRAY);
+        mRobotPathPaint.setARGB(0xff, 0, 0xff, 0);
         mRobotPathPaint.setStyle(Paint.Style.STROKE);
         mRobotPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mRobotPathPaint.setStrokeWidth(mRobotPathStrokeWidth);
@@ -166,33 +152,57 @@ public class RobotRoomView extends View {
 
         if (mMatrix != null && robotPath != null) {
             robotPath.transform(mMatrix);
-        } else {
-            Log.w(TAG, "No matrix set for scaling and translating!!!");
         }
         this.mRobotPath = robotPath;
     }
 
     /**
-     * Sets the path to draw as a representation of the walls.
+     * Sets the bounding box room.
      * 
-     * @param walls the walls.
+     * @param room the room to set.
      */
-    public void setWalls(Path walls) {
+    public void setRoom(BoundingBoxRoom room) {
+        this.mRoom = room;
         mRoomFloorPaint.setColor(Color.LTGRAY);
         mRoomFloorPaint.setStyle(Paint.Style.FILL);
 
         mRoomWallPaint.setColor(Color.GRAY);
-        mRoomWallPaint.setStyle(Paint.Style.STROKE);
-        mRoomWallPaint.setStrokeJoin(Paint.Join.MITER);
-        mRoomWallPaint.setStrokeCap(Paint.Cap.SQUARE);
-        mRoomWallPaint.setStrokeWidth(mRoomWallsStrokeWidth);
+        mRoomWallPaint.setStyle(Paint.Style.FILL);
 
-        if (mMatrix != null && walls != null) {
-            walls.transform(mMatrix);
-        } else {
-            Log.w(TAG, "No matrix set for scaling and translating!!!");
-        }
-        this.mWalls = walls;
+        defineViewPort(mRoom.getBoundingBox().first.x, mRoom.getBoundingBox().first.y,
+                mRoom.getBoundingBox().second.x, mRoom.getBoundingBox().second.y, 1f);
     }
 
+    private void drawRobotPath(android.graphics.Canvas canvas) {
+        if (mRobotPath != null && !mRobotPath.isEmpty()) {
+            canvas.drawPath(mRobotPath, mRobotPathPaint);
+        }
+    }
+
+    private void drawRoom(android.graphics.Canvas canvas) {
+        if (mRoom != null) {
+            int left = mRoom.getBoundingBox().first.x;
+            int right = mRoom.getBoundingBox().second.x;
+            int bottom = mRoom.getBoundingBox().first.y;
+            int top = mRoom.getBoundingBox().second.y;
+
+            Point position = new Point();
+            RectF floorTile = new RectF();
+
+            for (int x = left; x <= right; x++) {
+                for (int y = bottom; y <= top; y++) {
+                    position.set(x, y);
+                    floorTile.set(x - 0.5f, y - 0.5f, x + 0.5f, y + 0.5f);
+                    mMatrix.mapRect(floorTile);
+                    if (mRoom.contains(position)) {
+                        // Draw a floor tile
+                        canvas.drawRect(floorTile, mRoomFloorPaint);
+                    } else {
+                        // Draw a wall tile.
+                        canvas.drawRect(floorTile, mRoomWallPaint);
+                    }
+                }
+            }
+        }
+    }
 }
