@@ -113,19 +113,14 @@ public class Robot {
             char command = mProgram.charAt(mIntructionPointer++);
 
             if (command == mForwardChar) {
-                Log.d(TAG, "Move forward");
                 moveForward(mRobotLocation);
             } else if (command == mLeftChar) {
-                Log.d(TAG, "Turn left, then move forward.");
                 turnLeft(mRobotLocation);
                 moveForward(mRobotLocation);
             } else if (command == mRightChar) {
-                Log.d(TAG, "Turn right, then move forward.");
                 turnRight(mRobotLocation);
                 moveForward(mRobotLocation);
             }
-
-            Log.d(TAG, "Robot after moving: " + mRobotLocation.toString(mLanguage));
 
             return new RobotLocation(mRobotLocation);
         }
@@ -239,28 +234,24 @@ public class Robot {
                 coord.getPosition().offset(1, 0);
                 if (!mRoom.contains(coord.getPosition())) {
                     coord.getPosition().offset(-1, 0);
-                    Log.d(TAG, "Robot ran into a wall");
                 }
                 break;
             case NORTH:
                 coord.getPosition().offset(0, 1);
                 if (!mRoom.contains(coord.getPosition())) {
                     coord.getPosition().offset(0, -1);
-                    Log.d(TAG, "Robot ran into a wall");
                 }
                 break;
             case WEST:
                 coord.getPosition().offset(-1, 0);
                 if (!mRoom.contains(coord.getPosition())) {
                     coord.getPosition().offset(1, 0);
-                    Log.d(TAG, "Robot ran into a wall");
                 }
                 break;
             case SOUTH:
                 coord.getPosition().offset(0, -1);
                 if (!mRoom.contains(coord.getPosition())) {
                     coord.getPosition().offset(0, 1);
-                    Log.d(TAG, "Robot ran into a wall");
                 }
                 break;
 
