@@ -64,14 +64,6 @@
             android:minWidth="@dimen/command_button_width"
             android:text="@string/delete" />
 
-        <Button
-            android:id="@+id/button_play"
-            style="@style/CommandButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:minWidth="@dimen/command_button_width"
-            android:text="@string/play" />
     </LinearLayout>
 
     <TextView

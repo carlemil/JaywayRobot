@@ -8,7 +8,6 @@
     <string name="up_arrow">\u2191</string>
     <string name="right_arrow">\u21b7</string>
     <string name="delete">\u2190</string>
-    <string name="play">\u25b6</string>
 
     <!-- Status strings -->
     <string name="halting_position_of_robot">Robot position: %s</string>

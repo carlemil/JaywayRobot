@@ -95,7 +95,6 @@ public class ControlPanelFragment extends Fragment {
         setComandButtonClickListener(view.findViewById(R.id.button_right), mRobot.mRightChar);
         setComandButtonClickListener(view.findViewById(R.id.button_forward), mRobot.mForwardChar);
         setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
-        setPlayButtonClickListener(view.findViewById(R.id.button_play));
 
         runRobotAndUpdateVisualisation();
     }
@@ -133,6 +132,7 @@ public class ControlPanelFragment extends Fragment {
             public void onClick(View view) {
                 mRobot.getProgram().append(c);
                 showCurrentProgram();
+                runRobotAndUpdateVisualisation();
             }
         });
     }
@@ -147,14 +147,6 @@ public class ControlPanelFragment extends Fragment {
                     p.deleteCharAt(p.length() - 1);
                 }
                 showCurrentProgram();
-            }
-        });
-    }
-
-    private void setPlayButtonClickListener(View button) {
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 runRobotAndUpdateVisualisation();
             }
         });

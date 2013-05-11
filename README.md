@@ -11,13 +11,6 @@ reload visualiser in controlpanel.onResume()
 
 --- todo ---
 
-circular Room
-done - använd contains för att rita golv tiles. bort med onda walls[]
-
-updatera grafik vid varje ändring av programet
-
-change to backspace char for delete
-
 --- nice to have ---
 
 add a small 'droid' at the end of the path.
