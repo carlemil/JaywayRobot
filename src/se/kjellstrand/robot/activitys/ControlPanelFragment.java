@@ -32,34 +32,14 @@ public class ControlPanelFragment extends Fragment {
     protected static final String TAG = ControlPanelFragment.class.getCanonicalName();
 
     /**
-     * A StringBuilder that holds the current program. Used to run the robot.
+     * The ROBOT !!!
      */
-    private StringBuilder mProgram = new StringBuilder();
+    private Robot mRobot;
 
     /**
      * Class listening for results from our robot.
      */
     private RobotRunResultListener mResultListener;
-
-    /**
-     * Default language is English.
-     */
-    private Language mLanguage = Language.ENGLISH;
-
-    /**
-     * Language specific char used to denote a forward command.
-     */
-    private char mForwardChar;
-
-    /**
-     * Language specific char used to denote a left command.
-     */
-    private char mLeftChar;
-
-    /**
-     * Language specific char used to denote a right command.
-     */
-    private char mRightChar;
 
     @Override
     public void onAttach(Activity activity) {
@@ -75,21 +55,20 @@ public class ControlPanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.control_panel, null);
 
-        mLanguage = RobotSharedPreferences.getLanguage(getActivity());
-        setLanguage(mLanguage);
+        Language language = RobotSharedPreferences.getLanguage(getActivity());
+        mRobot = new Robot(language);
 
+        StringBuilder program;
         if (savedInstanceState != null) {
             // populate from savedInstanceState
-            mProgram = new StringBuilder(savedInstanceState.getString(RobotSharedPreferences.PROGRAM_KEY));
-            Log.d(TAG, "Read program from savedInstanceState: " + mProgram);
+            program = new StringBuilder(savedInstanceState.getString(RobotSharedPreferences.PROGRAM_KEY));
+            Log.d(TAG, "Read program from savedInstanceState: " + program);
         } else {
             // Populate from sharedPrefs
-            String program = RobotSharedPreferences.getProgram(getActivity());
-            if (program != null) {
-                mProgram.append(program);
-            }
+            program = RobotSharedPreferences.getProgram(getActivity());
         }
-
+        mRobot.resetProgram(program);
+        
         String resString = getString(R.string.halting_position_of_robot,
                 getActivity().getString(R.string.unknown_position));
         ((TextView) view.findViewById(R.id.robot_run_result)).setText(resString);
@@ -104,19 +83,15 @@ public class ControlPanelFragment extends Fragment {
         View view = getView();
 
         Language language = RobotSharedPreferences.getLanguage(getActivity());
-        Log.d("TAG", "lang: "+mLanguage.toString());
-        Log.d("TAG", "lang: "+language.toString());
-        if (language != mLanguage) {
+        if (language != mRobot.getLanguage()) {
             Log.d(TAG, "New language set: " + language);
-            setLanguage(language);
-            // Reset our program since the language changed.
-            mProgram = new StringBuilder();
+            mRobot.setLanguage(language);
         }
         showCurrentProgram();
 
-        setComandButtonClickListener(view.findViewById(R.id.button_left), mLeftChar);
-        setComandButtonClickListener(view.findViewById(R.id.button_right), mRightChar);
-        setComandButtonClickListener(view.findViewById(R.id.button_forward), mForwardChar);
+        setComandButtonClickListener(view.findViewById(R.id.button_left), mRobot.mLeftChar);
+        setComandButtonClickListener(view.findViewById(R.id.button_right), mRobot.mRightChar);
+        setComandButtonClickListener(view.findViewById(R.id.button_forward), mRobot.mForwardChar);
         setDeleteButtonClickListener(view.findViewById(R.id.button_delete));
         setPlayButtonClickListener(view.findViewById(R.id.button_play));
 
@@ -125,22 +100,26 @@ public class ControlPanelFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString(RobotSharedPreferences.PROGRAM_KEY, mProgram.toString());
+        outState.putString(RobotSharedPreferences.PROGRAM_KEY, mRobot.getProgram().toString());
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        if (mProgram != null) {
-            Log.d(TAG, "Write program to shared prefs: " + mProgram);
-            RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
+        if (mRobot.getProgram() != null) {
+            Log.d(TAG, "Write program to shared prefs: " + mRobot.getProgram());
+            RobotSharedPreferences.putProgram(getActivity(), mRobot.getProgram().toString());
         }
     }
     
+    /**
+     * Clear the robots program, and clears the program stored in the shared prefs.
+     * 
+     */
     public void resetRobotProgram(){
-        mProgram = new StringBuilder();
-        RobotSharedPreferences.putProgram(getActivity(), mProgram.toString());
+        mRobot.resetProgram(null);
+        RobotSharedPreferences.putProgram(getActivity(), null);
         showCurrentProgram();
         runRobotAndUpdateVisualisation();
     }
@@ -149,7 +128,7 @@ public class ControlPanelFragment extends Fragment {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProgram.append(c);
+                mRobot.getProgram().append(c);
                 showCurrentProgram();
             }
         });
@@ -159,21 +138,14 @@ public class ControlPanelFragment extends Fragment {
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                int l = mProgram.length();
+                StringBuilder p = mRobot.getProgram();
+                int l = p.length();
                 if (l > 0) {
-                    mProgram.deleteCharAt(mProgram.length() - 1);
+                    p.deleteCharAt(p.length() - 1);
                 }
-                TextView textView = (TextView) getView().findViewById(R.id.text_view_program);
-                textView.setText(mProgram);
+                showCurrentProgram();
             }
         });
-    }
-
-    private void setLanguage(Language language) {
-        mLanguage = language;
-        mForwardChar = Language.getForwardChar(language);
-        mLeftChar = Language.getLeftChar(language);
-        mRightChar = Language.getRightChar(language);
     }
 
     private void setPlayButtonClickListener(View button) {
@@ -189,8 +161,6 @@ public class ControlPanelFragment extends Fragment {
         // Set the resulting state to unknown until the run completes.
         setResultString(getString(R.string.unknown_position));
         
-        Robot robot = new Robot(mLanguage);
-
         // Read room data from shared prefs.
         int startX = RobotSharedPreferences.getRobotStartX(getActivity());
         int startY = RobotSharedPreferences.getRobotStartY(getActivity());
@@ -199,29 +169,29 @@ public class ControlPanelFragment extends Fragment {
 
         // Create new room
         Rect2DRoom room = new Rect2DRoom(roomWidth, roomLength, new Point(startX, startY));
-        robot.putInRoom(room);
-        robot.setProgram(mProgram.toString());
+        mRobot.putInRoom(room);
+        //mRobot.resetProgram();
 
         ArrayList<Point> robotPath = new ArrayList<Point>();
         // Add the start position of the robot to the list of positions that the
         // robot have visited.
-        robotPath.add(robot.getRoom().getStartPosition());
+        robotPath.add(mRobot.getRoom().getStartPosition());
 
         RobotLocation res = null;
         // Run the program to the end. Save the intermediate locations
         // for visualising the path.
-        while (robot.hasMoreMoves()) {
-            res = robot.move();
+        while (mRobot.hasMoreMoves()) {
+            res = mRobot.move();
             robotPath.add(res.getPosition());
         }
 
         // Show the resulting state
         if (res != null) {
-            setResultString(res.toString(mLanguage));
+            setResultString(res.toString(mRobot.getLanguage()));
         }
 
         // Let the result listener know that there is new data to display.
-        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), robot.getRoom()
+        mResultListener.robotRunResultReceived(robotPath.toArray(new Point[robotPath.size()]), mRobot.getRoom()
                 .getWalls());
     }
     
@@ -233,7 +203,7 @@ public class ControlPanelFragment extends Fragment {
 
     private void showCurrentProgram() {
         TextView textView = (TextView) getView().findViewById(R.id.text_view_program);
-        textView.setText(mProgram.toString());
+        textView.setText(mRobot.getProgram().toString());
     }
 
 }

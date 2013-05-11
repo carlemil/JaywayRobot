@@ -89,8 +89,11 @@ public class RobotSharedPreferences {
      * 
      * @return the program.
      */
-    public static String getProgram(Context context) {
-        return getPrefs(context).getString(PROGRAM_KEY, null);
+    public static StringBuilder getProgram(Context context) {
+        String program = getPrefs(context).getString(PROGRAM_KEY, null);
+        StringBuilder sb = new StringBuilder();
+        sb.append(program);
+        return sb;
     }
 
     /**

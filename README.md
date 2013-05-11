@@ -13,8 +13,6 @@ reload visualiser in controlpanel.onResume()
 
 circular Room
 
-refactor ControlPanelFragment to have a mRobot, and remove duplication of the robots data.
-
 --- nice to have ---
 
 add a small 'droid' at the end of the path.

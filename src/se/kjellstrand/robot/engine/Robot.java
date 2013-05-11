@@ -3,7 +3,8 @@ package se.kjellstrand.robot.engine;
 import android.util.Log;
 
 /**
- * A robot that reads instructions from a "program" and moves according to the instructions.
+ * A robot that reads instructions from a "program" and moves according to the
+ * instructions.
  * 
  */
 public class Robot {
@@ -28,7 +29,7 @@ public class Robot {
     /**
      * Contains the program for a robot.
      */
-    private String mProgram;
+    private StringBuilder mProgram;
 
     /**
      * Points to the current instruction of the program/robot.
@@ -39,19 +40,19 @@ public class Robot {
      * The char currently used to represent a move forward instruction in the
      * robots programming language.
      */
-    private final char FORWARD;
+    public char mForwardChar;
 
     /**
      * The char currently used to represent a move left instruction in the
      * robots programming language.
      */
-    private final char LEFT;
+    public char mLeftChar;
 
     /**
      * The char currently used to represent a move right instruction in the
      * robots programming language.
      */
-    private final char RIGHT;
+    public char mRightChar;
 
     /**
      * The language understood by this robot.
@@ -74,13 +75,7 @@ public class Robot {
     public Robot(Language language) {
         Log.d(TAG, "Robot started, language: " + language.toString());
         mLanguage = language;
-        FORWARD = Language.getForwardChar(language);
-        LEFT = Language.getLeftChar(language);
-        RIGHT = Language.getRightChar(language);
-    }
-
-    public String getProgram() {
-        return this.mProgram;
+        setLanguage(mLanguage);
     }
 
     /**
@@ -117,14 +112,14 @@ public class Robot {
         if (hasMoreMoves()) {
             char command = mProgram.charAt(mIntructionPointer++);
 
-            if (command == FORWARD) {
+            if (command == mForwardChar) {
                 Log.d(TAG, "Move forward");
                 moveForward(mRobotLocation);
-            } else if (command == LEFT) {
+            } else if (command == mLeftChar) {
                 Log.d(TAG, "Turn left, then move forward.");
                 turnLeft(mRobotLocation);
                 moveForward(mRobotLocation);
-            } else if (command == RIGHT) {
+            } else if (command == mRightChar) {
                 Log.d(TAG, "Turn right, then move forward.");
                 turnRight(mRobotLocation);
                 moveForward(mRobotLocation);
@@ -164,13 +159,68 @@ public class Robot {
     }
 
     /**
+     * Returns the robots language.
+     * 
+     * @return the language
+     */
+    public Language getLanguage() {
+        return this.mLanguage;
+    }
+
+    /**
+     * Sets the language of the robot, and resets the program.
+     * 
+     * @param mLanguage the language to set.
+     */
+    public void setLanguage(Language language) {
+        this.mLanguage = language;
+        mForwardChar = Language.getForwardChar(language);
+        mLeftChar = Language.getLeftChar(language);
+        mRightChar = Language.getRightChar(language);
+        // Reset our program since the language changed.
+        resetProgram(null);
+    }
+
+    /**
+     * Returns the robots program.
+     * 
+     * @return the program
+     */
+    public StringBuilder getProgram() {
+        return this.mProgram;
+    }
+
+    /**
      * Sets a new program to the robot.
      * 
      * @param program The program to set.
      */
-    public void setProgram(String program) {
-        this.mProgram = program;
+    public void resetProgram(StringBuilder program) {
+        if (program == null) {
+            this.mProgram = new StringBuilder();
+        } else {
+            this.mProgram = program;
+        }
         this.mIntructionPointer = 0;
+    }
+
+    /**
+     * Appends a char to the program.
+     * 
+     * @param c The char to append to the program.
+     */
+    public void appendProgram(char c) {
+        this.mProgram.append(c);
+    }
+
+    /**
+     * Deletes a char from the program.
+     * 
+     */
+    public void deleteCharFromProgram() {
+        if (mProgram.length() > 0) {
+            this.mProgram.deleteCharAt(0);
+        }
     }
 
     /**

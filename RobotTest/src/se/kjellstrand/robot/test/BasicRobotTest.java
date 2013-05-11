@@ -38,7 +38,7 @@ public class BasicRobotTest extends TestCase {
         assertEquals(null, robot.move());
 
         // set instructions to, "one step forward".
-        robot.setProgram("F");
+        robot.resetProgram("F");
         // Still a 0,0 size room
         assertEquals("1 1 " + N, robot.move().toString());
 
@@ -48,15 +48,15 @@ public class BasicRobotTest extends TestCase {
         assertEquals("1 2 " + N, robot.move().toString());
 
         // set instructions to, "left".
-        robot.setProgram("L");
+        robot.resetProgram("L");
         assertEquals("1 2 " + W, robot.move().toString());
 
         // set instructions to, "right".
-        robot.setProgram("R");
+        robot.resetProgram("R");
         assertEquals("1 3 " + N, robot.move().toString());
 
         // set instructions to, "right".
-        robot.setProgram("R");
+        robot.resetProgram("R");
         assertEquals("2 3 " + E, robot.move().toString());
 
     }
@@ -68,7 +68,7 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot();
         robot.putInRoom(room);
 
-        robot.setProgram("FRFFLFLLFF");
+        robot.resetProgram("FRFFLFLLFF");
         assertEquals("3 1 " + S, robot.moveUntilEnd().toString());
     }
 
@@ -78,7 +78,7 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot();
         robot.putInRoom(room);
 
-        robot.setProgram("RFRFFRFRF");
+        robot.resetProgram("RFRFFRFRF");
         assertEquals("1 3 " + N, robot.moveUntilEnd().toString());
     }
 
@@ -89,7 +89,7 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot();
         robot.putInRoom(room);
 
-        robot.setProgram("FFF");
+        robot.resetProgram("FFF");
         assertEquals("1 3 " + N, robot.moveUntilEnd().toString());
     }
 
@@ -99,7 +99,7 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot();
         robot.putInRoom(room);
 
-        robot.setProgram("RFFFFFF");
+        robot.resetProgram("RFFFFFF");
         assertEquals("3 1 " + E, robot.moveUntilEnd().toString());
     }
 
@@ -109,7 +109,7 @@ public class BasicRobotTest extends TestCase {
         Robot robot = new Robot();
         robot.putInRoom(room);
 
-        robot.setProgram("RRFFFRFRF");
+        robot.resetProgram("RRFFFRFRF");
         assertEquals("1 3 " + N, robot.moveUntilEnd().toString());
     }
 
